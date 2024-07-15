@@ -1,4 +1,5 @@
 @extends('frontend.layouts.master')
+@section('page', 'Products')
 @section('content')
     <section class="product_section layout_padding">
         <div class="container">

@@ -1,4 +1,5 @@
 @extends('frontend.layouts.master')
+@section('page', $product->name)
 @section('content')
     <section data-bs-version="5.1" class="container pt-5 pb-5 bg-danger features4 stepm5 cid-tw2LyYgLR1 rounded" id="afeatures4-4">
         <div class="container-fluid">

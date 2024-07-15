@@ -12,7 +12,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <title>@yield('page') - FashionBazaar</title>
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/bootstrap.css')}}" />
     <!-- font awesome style -->

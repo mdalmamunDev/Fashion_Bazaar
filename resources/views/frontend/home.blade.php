@@ -1,4 +1,5 @@
 @extends('frontend.layouts.master')
+@section('page', 'Home')
 @section('content')
     @include('frontend.layouts.sections.heroSection')
     @include('frontend.layouts.sections.whySection')

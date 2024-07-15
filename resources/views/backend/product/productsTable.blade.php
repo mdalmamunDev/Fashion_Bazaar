@@ -17,8 +17,8 @@
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">sn</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Details</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Category</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">User</th>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Actions</th>
                                 <th></th>
                             </tr>
@@ -35,10 +35,10 @@
                                         <p class="text-sm font-weight-bold mb-0">{{$value->name}}</p>
                                     </td>
                                     <td>
-                                        <span class="text-xs font-weight-bold">{{$value->details}}</span>
+                                        <span class="text-xs font-weight-bold">{{ $value->category ? $value->category->category_name : ''}}</span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-sm mb-0">{{$value->category}}</p>
+                                        <p class="text-sm mb-0">{{ $value->user ? $value->user->name : ''}}</p>
                                     </td>
                                     <td class="align-middle text-center">
                                         <a href="{{ route('admin.pro.edit', $value->id) }}" class="btn btn-warning p-2 mb-0">Update</a>

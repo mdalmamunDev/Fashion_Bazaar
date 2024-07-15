@@ -43,14 +43,14 @@
 
                                 <label for="category">Category</label>
                                 <div class="mb-3">
-                                    <select id="category" name="category" class="form-control" aria-label="Category" aria-describedby="category-addon" required>
+                                    <select id="category_id" name="category_id" class="form-control" aria-label="Category" aria-describedby="category-addon" required>
                                         <option value="">Select Category</option>
-                                        <option value="Category 1">Category 1</option>
-                                        <option value="Category 2">Category 2</option>
-                                        <option value="Category 3">Category 3</option>
-                                        <option value="Category 4">Category 4</option>
-                                        <option value="Category 5">Category 5</option>
-                                        <!-- Add more categories as needed -->
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                    {{ isset($product) && $category->id == $product->category_id ? 'selected' : '' }}>
+                                                    {{ $category->category_name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
 

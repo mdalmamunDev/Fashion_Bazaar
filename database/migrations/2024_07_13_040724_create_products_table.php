@@ -15,16 +15,18 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('details');
-            $table->string('category');
             $table->decimal('price', 8, 2);
-            $table->string('brand')->nullable(); // Add brand
-            $table->string('img')->nullable();   // Add img
+            $table->string('brand')->nullable();
+            $table->string('img')->nullable();
+            $table->integer('status')->default(1);
+            $table->integer('sales')->default(0);
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.

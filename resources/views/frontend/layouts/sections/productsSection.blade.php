@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="img-box">
-                            <img src="{{ asset('frontend/images/p'. ($loop->index % 12 + 1) .'.png') }}" alt="">
+                            <img src="{{ asset('storage/'. $product->img) }}" alt="">
                         </div>
                         <div class="detail-box">
                             <h5>

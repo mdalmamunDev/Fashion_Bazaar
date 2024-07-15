@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 class FrontendController extends Controller
 {
     public function index() {
-        $data['products'] = Product::take(6)->get();
+        $data['products'] = Product::select('id', 'name', 'price', 'img')
+            ->where('status', '!=', 0)
+            ->take(6)
+            ->get();
         return view('frontend.home', $data);
     }
 }

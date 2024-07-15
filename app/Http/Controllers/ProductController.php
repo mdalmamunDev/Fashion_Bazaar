@@ -2,29 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller {
 
     public function showOne($id) {
-        $data['product'] = Product::where('id', $id)->first();
-
+        $data['product'] = Product::findOrFail($id);
         return view('frontend.product', $data);
     }
 
     public function showList() {
-        $products = Product::all();
+        $products = Product::select('id', 'name', 'price', 'img')
+            ->where('status', '!=', 0)
+            ->get();
         return view('frontend.products', compact('products'));
     }
+
     public function showListBack() {
         $products = Product::all();
         return view('backend.product.productsTable', compact('products'));
     }
 
     public function add() {
-        return view('backend.product.addEditProduct');
+        $data['categories'] = Category::select('id', 'category_name')->get();
+        return view('backend.product.addEditProduct', $data);
     }
 
     public function store(Request $request) {
@@ -33,10 +38,10 @@ class ProductController extends Controller {
             $request->validate([
                 'name' => 'required|string|max:255',
                 'details' => 'required|string',
-                'category' => 'required|string|max:255',
+                'category_id' => 'required|exists:categories,id', // Validate category_id
                 'price' => 'required|numeric',
-                'brand' => 'nullable|string|max:255', // Validate brand
-                'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validate image
+                'brand' => 'nullable|string|max:255',
+                'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
 
             // Handle the file upload if an image is provided
@@ -45,14 +50,15 @@ class ProductController extends Controller {
                 $imagePath = $request->file('img')->store('images', 'public');
             }
 
-            // Create a new product instance and save it to the database
             $product = new Product();
             $product->name = $request->input('name');
             $product->details = $request->input('details');
-            $product->category = $request->input('category');
+            $product->category_id = $request->input('category_id'); // Save category_id
             $product->price = $request->input('price');
-            $product->brand = $request->input('brand'); // Save brand
-            $product->img = $imagePath; // Save image path if available
+            $product->brand = $request->input('brand');
+            $product->img = $imagePath;
+            $product->user_id = Auth::id();
+
             $product->save();
 
             // Redirect back with a success message
@@ -62,12 +68,10 @@ class ProductController extends Controller {
         }
     }
 
-    public function show(Product $product) {
-        return view('products.show', compact('product'));
-    }
 
     public function edit($id) {
-        $data['product'] = Product::where('id', $id)->first();
+        $data['product'] = Product::findOrFail($id);
+        $data['categories'] = Category::select('id', 'category_name')->get();
         return view('backend.product.addEditProduct', $data);
     }
 
@@ -78,17 +82,16 @@ class ProductController extends Controller {
             $request->validate([
                 'name' => 'required|string|max:255',
                 'details' => 'required|string',
-                'category' => 'required|string|max:255',
+                'category_id' => 'required|exists:categories,id', // Validate category_id
                 'price' => 'required|numeric',
-                'brand' => 'nullable|string|max:255', // Validate brand
-                'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' // Validate image
+                'brand' => 'nullable|string|max:255',
+                'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
 
             $product = Product::findOrFail($id);
 
             // Handle the file upload if a new image is provided
             if ($request->hasFile('img')) {
-
                 // Delete the old image if it exists
                 if ($product->img) {
                     Storage::disk('public')->delete($product->img);
@@ -102,9 +105,10 @@ class ProductController extends Controller {
             // Update product fields
             $product->name = $request->input('name');
             $product->details = $request->input('details');
-            $product->category = $request->input('category');
+            $product->category_id = $request->input('category_id'); // Update category_id
             $product->price = $request->input('price');
             $product->brand = $request->input('brand');
+            $product->user_id = Auth::id(); // Update the user_id if needed
 
             $product->save();
 
@@ -114,7 +118,6 @@ class ProductController extends Controller {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
-
 
     public function delete($id) {
         try {
@@ -130,10 +133,8 @@ class ProductController extends Controller {
 
             return redirect()->route('admin.pro.list')
                 ->with('success', 'Product deleted successfully.');
-
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
     }
-
 }

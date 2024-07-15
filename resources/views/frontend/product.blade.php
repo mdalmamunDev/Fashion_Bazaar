@@ -12,12 +12,15 @@
                 <div class="card col-12 col-lg-7 p-3 rounded">
                     <div class="card-wrapper">
                         <h1 class="card-title mbr-fonts-style display-3 mb-0"><strong>{{ $product->name }}</strong></h1>
-                        <h4 class="text-muted" style="margin-top: -15px;">{{ $product->category }}</h4>
+                        <h4 class="text-muted" style="margin-top: -15px;">{{ $product->category->category_name }}</h4>
                         <div>
                             <p>{{ $product->details }}</p>
                         </div>
                         <div class="price mt-3">
                             <h4>Brand: {{ $product->brand }}</h4>
+                        </div>
+                        <div class="price mt-3">
+                            <h4>Sales: {{ $product->sales }}</h4>
                         </div>
                         <div class="price mt-3">
                             <h4 class="text-success"><strong>Price: ${{ $product->price }}</strong></h4>

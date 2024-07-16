@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriesControler;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,8 +24,12 @@ Route::prefix('/')->group(function () {
 });
 
 
-Route::prefix('/admin')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('doLogin');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/tables', [DashboardController::class, 'tables']);
     Route::get('/billing', [DashboardController::class, 'billing']);
     Route::get('/profile', [DashboardController::class, 'profile']);

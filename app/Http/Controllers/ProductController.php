@@ -24,7 +24,7 @@ class ProductController extends Controller {
 
     public function showListBack() {
         $products = Product::all();
-        return view('backend.product.productsTable', compact('products'));
+        return view('backend.product.productList', compact('products'));
     }
 
     public function add() {

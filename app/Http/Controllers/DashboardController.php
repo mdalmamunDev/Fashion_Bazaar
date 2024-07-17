@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index(){
-        return view('backend.dashboard');
+        $data['products'] = Product::all();
+        $data['categories'] = Category::all();
+        return view('backend.dashboard', $data);
     }
     public function tables(){
         return view('backend.tables');

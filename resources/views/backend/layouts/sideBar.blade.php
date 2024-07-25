@@ -29,8 +29,8 @@
             ])
             @endcomponent
             @component('backend.layouts.nav-item', [
-                'link' => url('admin/profile'),
-                'active' => request()->is('admin/profile'),
+                'link' => route('user', auth()->user()->id),
+                'active' => request()->is('admin/user/'.auth()->user()->id),
                 'icon' => '<svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>customer-support</title>
                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

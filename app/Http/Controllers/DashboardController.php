@@ -9,17 +9,16 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index(){
-        $data['products'] = Product::all();
-        $data['categories'] = Category::all();
+        $data['products'] = Product::take(10)->get();;
+        $data['categories'] = Category::take(10)->get();;
         return view('backend.dashboard', $data);
     }
     public function tables(){
-        return view('backend.tables');
+        $data['products'] = Product::take(15)->get();;
+        $data['categories'] = Category::take(15)->get();;
+        return view('backend.tables', $data);
     }
     public function billing(){
         return view('backend.billing');
-    }
-    public function profile(){
-        return view('backend.profile');
     }
 }

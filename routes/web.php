@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -32,7 +33,7 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/tables', [DashboardController::class, 'tables']);
     Route::get('/billing', [DashboardController::class, 'billing']);
-    Route::get('/profile', [DashboardController::class, 'profile']);
+    Route::get('/user/{userId}', [UserController::class, 'index'])->name('user');
     Route::prefix('/product')->group(function () {
         Route::get('/list', [ProductController::class, 'showListBack'])->name('admin.pro.list');
         Route::get('/add', [ProductController::class, 'add'])->name('admin.pro.add');

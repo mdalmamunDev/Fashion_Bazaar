@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 
 
-@section('title', 'Profile')
+@section('title', 'User / '.$user->name)
 @section('content')
     <div>
         <div class="container-fluid">
@@ -12,16 +12,16 @@
                 <div class="row gx-4">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <img src="{{asset('backend/assets/img/bruce-mars.jpg')}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                            <img src="{{ asset('storage/images/' . $user->img) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
                     <div class="col-auto my-auto">
                         <div class="h-100">
                             <h5 class="mb-1">
-                                Alec Thompson
+                                {{ $user->name }}
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm">
-                                CEO / Co-Founder
+                                {{ $user->function }}
                             </p>
                         </div>
                     </div>
@@ -162,14 +162,14 @@
                         </div>
                         <div class="card-body p-3">
                             <p class="text-sm">
-                                Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
+                                {{ $user->bio }}
                             </p>
                             <hr class="horizontal gray-light my-4">
                             <ul class="list-group">
-                                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; Alec M. Thompson</li>
-                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (44) 123 1234 123</li>
-                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; alecthompson@mail.com</li>
-                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; USA</li>
+                                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Name:</strong> &nbsp; {{ $user->name }}</li>
+                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; {{ $user->mobile }}</li>
+                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ $user->email }}</li>
+                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; {{ $user->location }}</li>
                                 <li class="list-group-item border-0 ps-0 pb-0">
                                     <strong class="text-dark text-sm">Social:</strong> &nbsp;
                                     <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
@@ -250,132 +250,64 @@
                 <div class="col-12 mt-4">
                     <div class="card mb-4">
                         <div class="card-header pb-0 p-3">
-                            <h6 class="mb-1">Projects</h6>
-                            <p class="text-sm">Architects design houses</p>
+                            <h6 class="mb-1">Products</h6>
+                            <p class="text-sm">Lorem Ipsum is simply</p>
                         </div>
                         <div class="card-body p-3">
                             <div class="row">
-                                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                                    <div class="card card-blog card-plain">
-                                        <div class="position-relative">
-                                            <a class="d-block shadow-xl border-radius-xl">
-                                                <img src="{{asset('backend/assets/img/home-decor-1.jpg')}}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                                            </a>
-                                        </div>
-                                        <div class="card-body px-1 pb-0">
-                                            <p class="text-gradient text-dark mb-2 text-sm">Project #2</p>
-                                            <a href="javascript:;">
-                                                <h5>
-                                                    Modern
-                                                </h5>
-                                            </a>
-                                            <p class="mb-4 text-sm">
-                                                As Uber works through a huge amount of internal management turmoil.
-                                            </p>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                                                <div class="avatar-group mt-2">
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Elena Morison" data-bs-original-title="Elena Morison">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-1.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Ryan Milly" data-bs-original-title="Ryan Milly">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-2.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Nick Daniel" data-bs-original-title="Nick Daniel">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-3.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Peterson" data-bs-original-title="Peterson">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-4.jpg')}}">
-                                                    </a>
+                                @foreach($user->products as $pro)
+                                    <div class="col-xl-4 col-md-6 mb-xl-0 mb-4 mt-4">
+                                        <div class="card card-blog card-plain">
+                                            <div class="position-relative">
+                                                <a class="d-block shadow-xl border-radius-xl">
+                                                    <img src="{{ asset('storage/' . $pro->img) }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                                                </a>
+                                            </div>
+                                            <div class="card-body px-1 pb-0">
+                                                <p class="text-gradient text-dark mb-2 text-sm">
+                                                    {{ $pro->category->category_name }}
+                                                </p>
+                                                <a href="javascript:;">
+                                                    <h5>
+                                                        {{ $pro->name }}
+                                                    </h5>
+                                                </a>
+                                                <p class="mb-4 text-sm">
+                                                    {{ $pro->details }}
+                                                </p>
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <a href="{{ route('pro.show', $pro->id) }}" target="_blank" class="btn btn-outline-primary btn-sm mb-0">View Product</a>
+                                                    <div class="avatar-group mt-2">
+                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Elena Morison" data-bs-original-title="Elena Morison">
+                                                            <img alt="Image placeholder" src="{{asset('backend/assets/img/team-1.jpg')}}">
+                                                        </a>
+                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Ryan Milly" data-bs-original-title="Ryan Milly">
+                                                            <img alt="Image placeholder" src="{{asset('backend/assets/img/team-2.jpg')}}">
+                                                        </a>
+                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Nick Daniel" data-bs-original-title="Nick Daniel">
+                                                            <img alt="Image placeholder" src="{{asset('backend/assets/img/team-3.jpg')}}">
+                                                        </a>
+                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Peterson" data-bs-original-title="Peterson">
+                                                            <img alt="Image placeholder" src="{{asset('backend/assets/img/team-4.jpg')}}">
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                                    <div class="card card-blog card-plain">
-                                        <div class="position-relative">
-                                            <a class="d-block shadow-xl border-radius-xl">
-                                                <img src="{{asset('backend/assets/img/home-decor-2.jpg')}}" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
-                                            </a>
-                                        </div>
-                                        <div class="card-body px-1 pb-0">
-                                            <p class="text-gradient text-dark mb-2 text-sm">Project #1</p>
-                                            <a href="javascript:;">
-                                                <h5>
-                                                    Scandinavian
-                                                </h5>
-                                            </a>
-                                            <p class="mb-4 text-sm">
-                                                Music is something that every person has his or her own specific opinion about.
-                                            </p>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                                                <div class="avatar-group mt-2">
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Nick Daniel" data-bs-original-title="Nick Daniel">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-3.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Peterson" data-bs-original-title="Peterson">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-4.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Elena Morison" data-bs-original-title="Elena Morison">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-1.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Ryan Milly" data-bs-original-title="Ryan Milly">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-2.jpg')}}">
-                                                    </a>
-                                                </div>
+                                @endforeach
+                                @if(auth()->check() && auth()->user()->id == $user->id)
+                                    <div class="col-xl-4 col-md-6 mb-xl-0 mb-4">
+                                        <div class="card h-100 card-plain border">
+                                            <div class="card-body d-flex flex-column justify-content-center text-center">
+                                                <a href="{{ route('admin.pro.add') }}">
+                                                    <i class="fa fa-plus text-secondary mb-3" aria-hidden="true"></i>
+                                                    <h5 class=" text-secondary"> New product </h5>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                                    <div class="card card-blog card-plain">
-                                        <div class="position-relative">
-                                            <a class="d-block shadow-xl border-radius-xl">
-                                                <img src="{{asset('backend/assets/img/home-decor-3.jpg')}}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                                            </a>
-                                        </div>
-                                        <div class="card-body px-1 pb-0">
-                                            <p class="text-gradient text-dark mb-2 text-sm">Project #3</p>
-                                            <a href="javascript:;">
-                                                <h5>
-                                                    Minimalist
-                                                </h5>
-                                            </a>
-                                            <p class="mb-4 text-sm">
-                                                Different people have different taste, and various types of music.
-                                            </p>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                                                <div class="avatar-group mt-2">
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Peterson" data-bs-original-title="Peterson">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-4.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Nick Daniel" data-bs-original-title="Nick Daniel">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-3.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Ryan Milly" data-bs-original-title="Ryan Milly">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-2.jpg')}}">
-                                                    </a>
-                                                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Elena Morison" data-bs-original-title="Elena Morison">
-                                                        <img alt="Image placeholder" src="{{asset('backend/assets/img/team-1.jpg')}}">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                                    <div class="card h-100 card-plain border">
-                                        <div class="card-body d-flex flex-column justify-content-center text-center">
-                                            <a href="javascript:;">
-                                                <i class="fa fa-plus text-secondary mb-3" aria-hidden="true"></i>
-                                                <h5 class=" text-secondary"> New project </h5>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

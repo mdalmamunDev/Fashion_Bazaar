@@ -247,7 +247,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 mt-4">
+                @if($user->id != 3)
+                    <div class="col-12 mt-4">
                     <div class="card mb-4">
                         <div class="card-header pb-0 p-3">
                             <h6 class="mb-1">Products</h6>
@@ -312,6 +313,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

@@ -33,7 +33,7 @@
                                                         <img src="{{asset('storage/images/' . $user->img)}}" class="avatar avatar-sm me-3" alt="user1">
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm"> {{ $user->name }} </h6>
+                                                        <a href="{{ route('user', $user->id) }}" class="btn-link">{{ $user->name }}</a>
                                                         <p class="text-xs text-secondary mb-0"> {{ $user->email }} </p>
                                                     </div>
                                                 </div>

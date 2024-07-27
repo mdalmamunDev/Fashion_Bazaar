@@ -31,8 +31,13 @@
                         <p class="text-sm mb-0">{{ $value->user ? $value->user->name : ''}}</p>
                     </td>
                     <td class="align-middle text-center">
-                        <a href="{{ route('admin.pro.edit', $value->id) }}" class="btn btn-warning p-2 mb-0">Update</a>
-                        <a href="{{ route('admin.pro.del', $value->id) }}" class="btn btn-danger p-2 mb-0">Delete</a>
+                        @if(auth()->user()->type == 1 || ($value->user && auth()->user()->id == $value->user->id))
+                            <a href="{{ route('admin.pro.edit', $value->id) }}" class="btn btn-warning p-2 mb-0">Update</a>
+                            <a href="{{ route('admin.pro.del', $value->id) }}" class="btn btn-danger p-2 mb-0">Delete</a>
+                        @else
+                            <a href="{{ route('toast.wa') }}" class="btn btn-secondary p-2 mb-0">Update</a>
+                            <a href="{{ route('toast.wa') }}" class="btn btn-secondary p-2 mb-0">Delete</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

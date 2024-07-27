@@ -8,7 +8,11 @@
             <div class="card mb-4">
                 <div class="card-header pb-0 d-flex justify-content-between">
                     <h6>Categories table</h6>
-                    <a href="{{route('cat.add')}}" type="button" class="btn btn-primary">Add Category</a>
+                    @if(auth()->user()->type == 3)
+                        <a href="{{ route('toast.wa') }}" type="button" class="btn btn-secondary">Add Category</a>
+                    @else
+                        <a href="{{route('cat.add')}}" type="button" class="btn btn-primary">Add Category</a>
+                    @endif
                 </div>
                 @include('backend.categoryTable')
             </div>

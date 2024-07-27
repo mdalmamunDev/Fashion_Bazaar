@@ -28,6 +28,10 @@ Ensure you have the following installed:
 - Composer
 - MySQL or another supported database
 
+### Libraries
+We use those libraries for improve our app
+- Toastr: https://github.com/brian2694/laravel-toastr?tab=readme-ov-file
+
 ### Setup
 
 1. **Clone the Repository**

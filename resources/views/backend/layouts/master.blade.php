@@ -104,6 +104,8 @@
 </div>
 
 @include('backend.layouts.links.lowerLinks')
+
+{!! Toastr::message() !!}
 </body>
 
 </html>

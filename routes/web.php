@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,4 +52,15 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
         Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('cat.delete');
     });
 
+});
+
+Route::prefix('/toast')->group(function () {
+    Route::get('/', function () {
+        Toastr::success('Messages in here', 'Title', ["positionClass" => "toast-top-center"]);
+        return redirect()->back();
+    });
+    Route::get('/wrongAuth', function () {
+        Toastr::error('Feature not applicable for you', 'Auth Error!', ["positionClass" => "toast-top-center"]);
+        return redirect()->back();
+    })->name('toast.wa');
 });

@@ -28,13 +28,14 @@ Route::prefix('/')->group(function () {
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('doLogin');
+Route::get('/signup', [UserController::class, 'create'])->name('signup');
+Route::post('/signup', [UserController::class, 'store'])->name('doSignup');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/tables', [DashboardController::class, 'tables']);
     Route::get('/billing', [DashboardController::class, 'billing']);
-    Route::get('/user/{userId}', [UserController::class, 'index'])->name('user');
     Route::prefix('/product')->group(function () {
         Route::get('/list', [ProductController::class, 'showListBack'])->name('admin.pro.list');
         Route::get('/add', [ProductController::class, 'add'])->name('admin.pro.add');
@@ -50,6 +51,13 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
         Route::get('/edit/{id}', [CategoriesControler::class, 'edit'])->name('cat.edit');
         Route::post('/update', [CategoriesControler::class, 'update'])->name('cat.update');
         Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('cat.delete');
+    });
+    Route::prefix('/user')->group(function () {
+        Route::get('/{userId}', [UserController::class, 'index'])->name('user');
+//        Route::get('/list', [CategoriesControler::class, 'index'])->name('user.list');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::post('/update', [UserController::class, 'update'])->name('user.update');
+//        Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('user.delete');
     });
 
 });

@@ -12,7 +12,7 @@
                 <div class="row gx-4">
                     <div class="col-auto">
                         <div class="avatar avatar-xl position-relative">
-                            <img src="{{ asset('storage/images/' . $user->img) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                            <img src="{{ asset('storage/' . $user->img) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                         </div>
                     </div>
                     <div class="col-auto my-auto">
@@ -21,7 +21,12 @@
                                 {{ $user->name }}
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm">
-                                {{ $user->function }}
+                                @switch($user->type)
+                                    @case(1) Super Admin @break
+                                    @case(2) Admin @break
+                                    @default Regular User
+                                @endswitch
+                                 | {{ $user->function }}
                             </p>
                         </div>
                     </div>
@@ -154,8 +159,8 @@
                                     <h6 class="mb-0">Profile Information</h6>
                                 </div>
                                 <div class="col-md-4 text-end">
-                                    <a href="javascript:;">
-                                        <i class="fas fa-user-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Edit Profile" data-bs-original-title="Edit Profile"></i><span class="sr-only">Edit Profile</span>
+                                    <a href="{{ route('user.edit', $user->id) }}">
+                                        <i class="fas fa-user-edit text-primary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Edit Profile" data-bs-original-title="Update"></i><span class="sr-only">Update</span>
                                     </a>
                                 </div>
                             </div>
@@ -247,72 +252,72 @@
                         </div>
                     </div>
                 </div>
-                @if($user->id != 3)
+                @if($user->type != 3)
                     <div class="col-12 mt-4">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0 p-3">
-                            <h6 class="mb-1">Products</h6>
-                            <p class="text-sm">Lorem Ipsum is simply</p>
-                        </div>
-                        <div class="card-body p-3">
-                            <div class="row">
-                                @foreach($user->products as $pro)
-                                    <div class="col-xl-4 col-md-6 mb-xl-0 mb-4 mt-4">
-                                        <div class="card card-blog card-plain">
-                                            <div class="position-relative">
-                                                <a class="d-block shadow-xl border-radius-xl">
-                                                    <img src="{{ asset('storage/' . $pro->img) }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                                                </a>
-                                            </div>
-                                            <div class="card-body px-1 pb-0">
-                                                <p class="text-gradient text-dark mb-2 text-sm">
-                                                    {{ $pro->category->category_name }}
-                                                </p>
-                                                <a href="javascript:;">
-                                                    <h5>
-                                                        {{ $pro->name }}
-                                                    </h5>
-                                                </a>
-                                                <p class="mb-4 text-sm">
-                                                    {{ $pro->details }}
-                                                </p>
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <a href="{{ route('pro.show', $pro->id) }}" target="_blank" class="btn btn-outline-primary btn-sm mb-0">View Product</a>
-                                                    <div class="avatar-group mt-2">
-                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Elena Morison" data-bs-original-title="Elena Morison">
-                                                            <img alt="Image placeholder" src="{{asset('backend/assets/img/team-1.jpg')}}">
-                                                        </a>
-                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Ryan Milly" data-bs-original-title="Ryan Milly">
-                                                            <img alt="Image placeholder" src="{{asset('backend/assets/img/team-2.jpg')}}">
-                                                        </a>
-                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Nick Daniel" data-bs-original-title="Nick Daniel">
-                                                            <img alt="Image placeholder" src="{{asset('backend/assets/img/team-3.jpg')}}">
-                                                        </a>
-                                                        <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Peterson" data-bs-original-title="Peterson">
-                                                            <img alt="Image placeholder" src="{{asset('backend/assets/img/team-4.jpg')}}">
-                                                        </a>
+                        <div class="card mb-4">
+                            <div class="card-header pb-0 p-3">
+                                <h6 class="mb-1">Products</h6>
+                                <p class="text-sm">Lorem Ipsum is simply</p>
+                            </div>
+                            <div class="card-body p-3">
+                                <div class="row">
+                                    @foreach($user->products as $pro)
+                                        <div class="col-xl-4 col-md-6 mb-xl-0 mb-4 mt-4">
+                                            <div class="card card-blog card-plain">
+                                                <div class="position-relative">
+                                                    <a class="d-block shadow-xl border-radius-xl">
+                                                        <img src="{{ asset('storage/' . $pro->img) }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                                                    </a>
+                                                </div>
+                                                <div class="card-body px-1 pb-0">
+                                                    <p class="text-gradient text-dark mb-2 text-sm">
+                                                        {{ $pro->category->category_name }}
+                                                    </p>
+                                                    <a href="javascript:;">
+                                                        <h5>
+                                                            {{ $pro->name }}
+                                                        </h5>
+                                                    </a>
+                                                    <p class="mb-4 text-sm">
+                                                        {{ $pro->details }}
+                                                    </p>
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <a href="{{ route('pro.show', $pro->id) }}" target="_blank" class="btn btn-outline-primary btn-sm mb-0">View Product</a>
+                                                        <div class="avatar-group mt-2">
+                                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Elena Morison" data-bs-original-title="Elena Morison">
+                                                                <img alt="Image placeholder" src="{{asset('backend/assets/img/team-1.jpg')}}">
+                                                            </a>
+                                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Ryan Milly" data-bs-original-title="Ryan Milly">
+                                                                <img alt="Image placeholder" src="{{asset('backend/assets/img/team-2.jpg')}}">
+                                                            </a>
+                                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Nick Daniel" data-bs-original-title="Nick Daniel">
+                                                                <img alt="Image placeholder" src="{{asset('backend/assets/img/team-3.jpg')}}">
+                                                            </a>
+                                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Peterson" data-bs-original-title="Peterson">
+                                                                <img alt="Image placeholder" src="{{asset('backend/assets/img/team-4.jpg')}}">
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
-                                @if(auth()->check() && auth()->user()->id == $user->id)
-                                    <div class="col-xl-4 col-md-6 mb-xl-0 mb-4">
-                                        <div class="card h-100 card-plain border">
-                                            <div class="card-body d-flex flex-column justify-content-center text-center">
-                                                <a href="{{ route('admin.pro.add') }}">
-                                                    <i class="fa fa-plus text-secondary mb-3" aria-hidden="true"></i>
-                                                    <h5 class=" text-secondary"> New product </h5>
-                                                </a>
+                                    @endforeach
+                                    @if(auth()->check() && auth()->user()->id == $user->id)
+                                        <div class="col-xl-4 col-md-6 mb-xl-0 mb-4">
+                                            <div class="card h-100 card-plain border">
+                                                <div class="card-body d-flex flex-column justify-content-center text-center">
+                                                    <a href="{{ route('admin.pro.add') }}">
+                                                        <i class="fa fa-plus text-secondary mb-3" aria-hidden="true"></i>
+                                                        <h5 class=" text-secondary"> New product </h5>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endif
             </div>
         </div>

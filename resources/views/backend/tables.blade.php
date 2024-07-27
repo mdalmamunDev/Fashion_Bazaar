@@ -30,7 +30,7 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div>
-                                                        <img src="{{asset('storage/images/' . $user->img)}}" class="avatar avatar-sm me-3" alt="user1">
+                                                        <img src="{{asset('storage/' . $user->img)}}" class="avatar avatar-sm me-3" alt="user1">
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <a href="{{ route('user', $user->id) }}" class="btn-link">{{ $user->name }}</a>

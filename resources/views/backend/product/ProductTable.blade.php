@@ -22,13 +22,15 @@
                         </div>
                     </td>
                     <td>
-                        <p class="text-sm font-weight-bold mb-0">{{$value->name}}</p>
+                        <a href="{{ route('pro.show', $value->id) }}" class="text-sm font-weight-bold mb-0" target="_blank">{{$value->name}}</a>
                     </td>
                     <td>
                         <span class="text-xs font-weight-bold">{{ $value->category ? $value->category->category_name : ''}}</span>
                     </td>
                     <td class="align-middle text-center">
-                        <p class="text-sm mb-0">{{ $value->user ? $value->user->name : ''}}</p>
+                        @if($value->user)
+                            <a href="{{ route('user', $value->user->id) }}" class="text-sm mb-0" target="_blank">{{$value->user->name }}</a>
+                        @endif
                     </td>
                     <td class="align-middle text-center">
                         @if(auth()->user()->type == 1 || ($value->user && auth()->user()->id == $value->user->id))

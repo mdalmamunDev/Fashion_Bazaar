@@ -57,7 +57,7 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
 //        Route::get('/list', [CategoriesControler::class, 'index'])->name('user.list');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
         Route::post('/update', [UserController::class, 'update'])->name('user.update');
-//        Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('user.delete');
+        Route::get('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
     });
 
 });

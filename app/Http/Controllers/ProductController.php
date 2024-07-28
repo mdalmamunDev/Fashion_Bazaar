@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,8 @@ class ProductController extends Controller {
             $product->save();
 
             // Redirect back with a success message
-            return redirect()->back()->with('success', 'Product created successfully.');
+            Toastr::success('New product inserted', 'Successfully Inserted!', ["positionClass" => "toast-top-center"]);
+            return redirect()->route('admin.pro.list');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
@@ -112,8 +114,8 @@ class ProductController extends Controller {
 
             $product->save();
 
-            return redirect()->route('admin.pro.list')
-                ->with('success', 'Product updated successfully.');
+            Toastr::success('The product has been updated', 'Successfully Updated!', ["positionClass" => "toast-top-center"]);
+            return redirect()->route('admin.pro.list');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
@@ -131,8 +133,8 @@ class ProductController extends Controller {
             // Delete the product from the database
             $product->delete();
 
-            return redirect()->route('admin.pro.list')
-                ->with('success', 'Product deleted successfully.');
+            Toastr::success('The product has been deleted', 'Successfully Deleted!', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }

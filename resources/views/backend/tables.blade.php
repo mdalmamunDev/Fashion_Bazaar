@@ -20,7 +20,9 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Type</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
-                                    <th class="text-secondary opacity-7"></th>
+                                    @if(auth()->user()->type == 1)
+                                        <th class="text-secondary opacity-7"></th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -53,11 +55,13 @@
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold"> {{ $user->created_at->format('d/m/y') }} </span>
                                             </td>
-                                            <td class="align-middle">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    Edit
-                                                </a>
-                                            </td>
+                                            @if(auth()->user()->type == 1)
+                                                <td class="align-middle">
+                                                    <a href="{{ route('user.edit', $user->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                        Edit
+                                                    </a>
+                                                </td>
+                                            @endif
                                         </tr>
                                      @endforeach
                                 </tbody>

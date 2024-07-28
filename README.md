@@ -15,9 +15,19 @@ FashionBazaar is an e-commerce web application for selling men's and women's clo
 
 There are three types of users in the system:
 
-- **Super Admin**: Full control over the application, including all administrative functions. Represented by `1` in the system.
-- **Admin**: Limited control compared to the Super Admin. Has access to manage products and categories but with some restrictions. Represented by `2` in the system.
-- **Regular User**: Common buyer or user with basic access to view and purchase products. Represented by `3` in the system.
+1. **Super Admin**: Full control over the application, including all administrative functions. Represented by `1` in the system.
+    - He can post.
+    - Create category,
+    - Change user type.
+    - Modify any user, post or category.
+    - But can't modify user's email and password.
+2. **Admin**: Limited control compared to the Super Admin. Has access to manage products and categories but with some restrictions. Represented by `2` in the system.
+    - He can post.
+    - Modify only his own post.
+    - Can't modify other user or other's post and any category.
+3. **Regular User**: Common buyer or user with basic access to view and purchase products. Represented by `3` in the system.
+    - He can only buy product.
+    - Can change his profile information only.
 
 ## Installation
 

@@ -15,8 +15,6 @@
                         <div class="card-body">
                             <form role="form" method="POST" action="{{isset($category) ? route('cat.update') : route('cat.store')}}" enctype="multipart/form-data">
                                 {{csrf_field()}}
-{{--                                <span class="text-success">{{Session::has('success') ? Session::get('success') : ''}}</span>--}}
-{{--                                <br/>--}}
 
                                 @if(isset($category))
                                 <input type="hidden" name="id" value="{{$category->id}}">

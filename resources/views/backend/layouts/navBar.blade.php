@@ -20,13 +20,19 @@
                 </li>
                 <li class="nav-item d-flex align-items-center">
 {{--                    <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">--}}
-                        <i class="fa fa-user me-sm-1"></i>
+{{--                        <i class="fa fa-user me-sm-1"></i>--}}
+
                         <span class="d-sm-inline d-none">
                             @if(auth() && auth()->user())
                                 <form role="form" action="{{ route('logout') }}" method="post">
                                     {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-link mb-0 ps-0">{{ auth()->user()->name }}</button>
+                                        <button type="submit" class="btn btn-link mb-0 ps-0">
+                                            <i class="fa fa-arrow-circle-o-right text-primary fs-4" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Logout" data-bs-original-title="Logout"></i>
+                                        </button>
                                 </form>
+                                <a href="">
+{{--                                    <i class="fas fa-user-edit text-primary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Update" data-bs-original-title="Update"></i><span class="sr-only">Update</span>--}}
+                                </a>
                             @else
                                 <a href="{{ route('login') }}">Login</a>
                             @endif

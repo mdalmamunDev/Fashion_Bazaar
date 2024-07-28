@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -31,9 +32,8 @@ class CategoriesControler extends Controller
         $category->status = $request->input('available') == 'yes' ? 1 : 0;
         $category->save();
 
-        Session::flash('success', 'Successfully Inserted');
-
-        return redirect()->back();
+        Toastr::success('New category inserted', 'Successfully Inserted!', ["positionClass" => "toast-top-center"]);
+        return redirect()->route('cat.list');
 
     }
 
@@ -61,13 +61,11 @@ class CategoriesControler extends Controller
             $category->status = $request->input('available') == 'yes' ? 1 : 0;
             $category->update();
 
-            Session::flash('success', 'Successfully Updated');
-
-            return redirect()->back();
+            Toastr::success('The category has been updated', 'Successfully Updated!', ["positionClass" => "toast-top-center"]);
+            return redirect()->route('cat.list');
         }
 
-        Session::flash('success', 'Data not found');
-
+        Toastr::error('The category is not found', 'Not Found!', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 
@@ -77,13 +75,11 @@ class CategoriesControler extends Controller
         if ($category){
             $category->delete();
 
-            Session::flash('success', 'Successfully Delete');
-
+            Toastr::success('The category has been deleted', 'Successfully Deleted!', ["positionClass" => "toast-top-center"]);
             return redirect()->back();
         }
 
-        Session::flash('success', 'Data not found');
-
+        Toastr::error('The category is not found', 'Not Found!', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 }

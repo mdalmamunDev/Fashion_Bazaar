@@ -31,9 +31,9 @@
                         <p class="text-sm mb-0">{{$value->status ? 'Available' : 'Unavailable'}}</p>
                     </td>
                     <td class="align-middle text-center">
-                        @if(auth()->user()->type == 1 || ($value->user && auth()->user()->id == $value->user->id))
+                        @if(auth()->user()->type == 1)
                             <a href="{{route('cat.edit', $value->id)}}" class="btn btn-warning p-2 mb-0">Update</a>
-                            <a href="{{route('cat.delete', $value->id)}}" class="btn btn-danger p-2 mb-0">Delete</a>
+                            <a onclick="return confirm('Are you sure to delete this category?')" href="{{route('cat.delete', $value->id)}}" class="btn btn-danger p-2 mb-0">Delete</a>
                         @else
                             <a href="{{ route('toast.wa') }}" class="btn btn-secondary p-2 mb-0">Update</a>
                             <a href="{{ route('toast.wa') }}" class="btn btn-secondary p-2 mb-0">Delete</a>

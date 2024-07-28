@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -84,6 +86,7 @@ class UserController extends Controller
                 'bio' => 'nullable|string',
                 'location' => 'nullable|string|max:255',
                 'function' => 'nullable|string|max:255',
+                'type' => 'required|integer|',
                 'old_password' => 'nullable|string|min:6',
                 'password' => 'nullable|string|min:6|confirmed',
             ]);
@@ -110,8 +113,12 @@ class UserController extends Controller
             $user->bio = $request->bio;
             $user->location = $request->location;
             $user->function = $request->function;
+            $user->type = $request->type;
 
             if ($request->hasFile('img')) {
+                // delete prev img
+                if ($user->img) Storage::disk('public')->delete($user->img);
+                // save new img
                 $user->img = $request->file('img')->store('images', 'public');
             }
 
@@ -125,21 +132,23 @@ class UserController extends Controller
 
     public function delete($id)
     {
-//        try {
-//            $product = Product::findOrFail($id);
-//
-//            // Delete the image if it exists
-//            if ($product->img) {
-//                Storage::disk('public')->delete($product->img);
-//            }
-//
-//            // Delete the product from the database
-//            $product->delete();
-//
-//            return redirect()->route('admin.pro.list')
-//                ->with('success', 'Product deleted successfully.');
-//        } catch (\Exception $e) {
-//            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
-//        }
+        try {
+            $user = User::findOrFail($id);
+
+            // Delete the image if it exists
+            if ($user->img) {
+                Storage::disk('public')->delete($user->img);
+            }
+
+            // Delete the product from the database
+            $user->delete();
+
+            if (Auth::id() == $id)
+                return redirect()->route('logout')->with('success', 'User deleted successfully.');
+
+            return redirect()->back()->with('success', 'User deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 }

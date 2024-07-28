@@ -56,7 +56,7 @@
 
                                 <label for="image">Product Image</label>
                                 <div class="mb-3">
-                                    <input type="file" id="img" name="img" class="form-control" aria-label="Image" aria-describedby="image-addon" required>
+                                    <input type="file" id="img" name="img" class="form-control" aria-label="Image" aria-describedby="image-addon">
                                 </div>
 
                                 <div class="text-center">

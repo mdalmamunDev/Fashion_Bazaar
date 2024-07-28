@@ -158,11 +158,13 @@
                                 <div class="col-md-8 d-flex align-items-center">
                                     <h6 class="mb-0">Profile Information</h6>
                                 </div>
-                                <div class="col-md-4 text-end">
-                                    <a href="{{ route('user.edit', $user->id) }}">
-                                        <i class="fas fa-user-edit text-primary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Edit Profile" data-bs-original-title="Update"></i><span class="sr-only">Update</span>
-                                    </a>
-                                </div>
+                                @if(auth()->user()->type == 1 || auth()->user()->id == $user->id)
+                                    <div class="col-md-4 text-end">
+                                        <a href="{{ route('user.edit', $user->id) }}">
+                                            <i class="fas fa-user-edit text-primary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Update" data-bs-original-title="Update"></i><span class="sr-only">Update</span>
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="card-body p-3">

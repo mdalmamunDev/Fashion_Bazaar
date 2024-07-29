@@ -8,25 +8,27 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item {{ (trim($__env->yieldContent('page')) == 'Home') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Pages <span class="caret"></span></a>
+                    <li class="nav-item dropdown {{ (trim($__env->yieldContent('page')) == 'Pages') ? 'active' : '' }}">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                            <span class="nav-label">Pages <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="about.html">About</a></li>
                             <li><a href="testimonial.html">Testimonial</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ (trim($__env->yieldContent('page')) == 'Products') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('pro.list') }}">Products</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blog_list.html">Blog</a>
+                    <li class="nav-item {{ (trim($__env->yieldContent('page')) == 'Blog') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('/blog') }}">Blog</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                    <li class="nav-item {{ (trim($__env->yieldContent('page')) == 'Contact') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">

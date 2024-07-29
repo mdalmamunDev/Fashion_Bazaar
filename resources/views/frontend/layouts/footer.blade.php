@@ -69,7 +69,7 @@
 </footer>
 
 <div class="cpy_">
-    <p class="mx-auto">© 2021 All Rights Reserved By <a href="">Fashion Bazaar</a><br>
+    <p class="mx-auto">© {{ \Illuminate\Support\Carbon::now()->format('Y') }} All Rights Reserved By <a href="">Fashion Bazaar</a><br>
 
         Developed By <a href="" target="_blank">Md. Al Mamun</a>
 

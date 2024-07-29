@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/')->group(function () {
     Route::get('/', [FrontendController::class, 'index']);
     Route::prefix('/product')->group(function () {
-
         Route::get('/show/{id}', [ProductController::class, 'showOne'])->name('pro.show');
         Route::get('/list', [ProductController::class, 'showList'])->name('pro.list');
 //        Route::get('/add', [CategoriesControler::class, 'create'])->name('pro.add');
@@ -23,6 +22,8 @@ Route::prefix('/')->group(function () {
 //        Route::post('/update', [CategoriesControler::class, 'update'])->name('pro.update');
 //        Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('pro.delete');
     });
+    Route::get('/blog', [FrontendController::class, 'blog']);
+    Route::get('/contact', [FrontendController::class, 'contact']);
 });
 
 

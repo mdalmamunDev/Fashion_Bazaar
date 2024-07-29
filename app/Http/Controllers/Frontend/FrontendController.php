@@ -15,4 +15,12 @@ class FrontendController extends Controller
             ->get();
         return view('frontend.home', $data);
     }
+
+    public function blog() {
+        return view('frontend.blog');
+    }
+
+    public function contact() {
+        return view('frontend.contact');
+    }
 }

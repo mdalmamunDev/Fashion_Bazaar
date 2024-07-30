@@ -23,11 +23,19 @@
                             <img src="{{ asset('storage/'. $product->img) }}" alt="">
                         </div>
                         <div class="detail-box">
-                            <h5>
-                                {{ $product->name }}
+                            <h5 class="mb-1">
+                                {{ $product->name }} Hi this is another heading for this item
                             </h5>
-                            <h6>
-                                ${{ $product->price }}
+                            <h6 class="text-muted mb-0">
+                                @if($product->dis_rate > 0)
+                                    <span>
+                                        <span class="text-danger" style="text-decoration: line-through; font-size: 10px">${{ $product->price }}</span><span class="text-success" style="font-size: 8px">({{ '-'.$product->dis_rate.'%' }})</span>
+                                    </span>
+                                    <br>
+                                    ${{ $product->finalPrice}}
+                                @else
+                                    ${{ $product->price }}
+                                @endif
                             </h6>
                         </div>
                     </div>

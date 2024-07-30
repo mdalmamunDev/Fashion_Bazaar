@@ -23,7 +23,17 @@
                             <h4>Sales: {{ $product->sales }}</h4>
                         </div>
                         <div class="price mt-3">
-                            <h4 class="text-success"><strong>Price: ${{ $product->price }}</strong></h4>
+                            <h4>Offer: {{ $product->dis_rate_frm }}% off, save {{ $product->price - $product->final_price }}$</h4>
+                        </div>
+                        <div class="price mt-3">
+                            <h4 class="text-success"><strong>Price:</strong>
+                                <span class="text-danger" style="text-decoration: line-through; font-size: 14px">
+                                    {{ $product->price }}$
+                                </span>
+                                <span class="text-success" style="margin-left: 10px">
+                                    {{ $product->finalPrice }}$
+                                </span>
+                            </h4>
                         </div>
                         <div class="action-buttons mt-4">
                             <a href="#" class="btn btn-primary">Add to Cart</a>

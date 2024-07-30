@@ -19,7 +19,7 @@ class ProductController extends Controller {
     public function showList() {
         $products = Product::select('id', 'name', 'price', 'img')
             ->where('status', '!=', 0)
-            ->get();
+            ->paginate(9);
         return view('frontend.products', compact('products'));
     }
 

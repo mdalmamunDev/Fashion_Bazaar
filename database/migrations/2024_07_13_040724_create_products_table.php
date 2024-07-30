@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('img')->nullable();
             $table->integer('status')->default(1);
             $table->integer('sales')->default(0);
+            $table->decimal('dis_rate', 5, 2)->default(0.00);
             $table->timestamps();
         });
     }

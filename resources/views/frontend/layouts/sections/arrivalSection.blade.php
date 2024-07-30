@@ -1,7 +1,9 @@
+{{--        required: resentProducts         --}}
+
 <section class="arrival_section">
     <div class="container">
         <div class="box">
-            <div class="arrival_bg_box">
+            <div class="arrival_bg_box" style="z-index: 0">
                 <img src="{{asset('frontend/images/arrival-bg.png')}}" alt="">
             </div>
             <div class="row">
@@ -11,12 +13,20 @@
                             #NewArrivals
                         </h2>
                     </div>
-                    <p style="margin-top: 20px;margin-bottom: 30px;">
-                        Vitae fugiat laboriosam officia perferendis provident aliquid voluptatibus dolorem, fugit ullam sit earum id eaque nisi hic? Tenetur commodi, nisi rem vel, ea eaque ab ipsa, autem similique ex unde!
-                    </p>
-                    <a href="">
-                        Shop Now
-                    </a>
+                    <div>
+                        @foreach($resentProducts as $pro)
+                            <div class="d-flex">
+                                <div class="d-flex align-items-center" style="margin-right: 10px">
+                                    <img src="{{asset('storage/'.$pro->img)}}" width="60px"/>
+                                </div>
+                                <div>
+                                    <a href="{{ route('pro.show', $pro->id) }}" class="border-0 text-dark m-0 p-0 font-weight-bold pe-auto" style="background: none; font-size: 20px; cursor: pointer">{{ $pro->name }}</a>
+                                    <p class="mb-1" style="font-size: 14px">{{ strlen($pro->details)>110 ? substr($pro->details, 0, 110).'...' : $pro->details}}</p>
+                                    <p class="font-weight-light" style="font-size: 12px">{{ $pro->relative_time }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

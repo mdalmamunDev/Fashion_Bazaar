@@ -38,6 +38,9 @@
                     </div>
                 @endforeach
             </div>
+            <div class="d-flex justify-content-center mt-4">
+                {{ $products->links('pagination::bootstrap-4') }}
+            </div>
             <div class="btn-box">
                 <a href="{{ url('/') }}">
                     Go Back

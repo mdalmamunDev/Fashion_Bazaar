@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\UserController;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Route::prefix('/')->group(function () {
     });
     Route::get('/blog', [FrontendController::class, 'blog']);
     Route::get('/contact', [FrontendController::class, 'contact']);
+    Route::post('/join_us', [FrontendController::class, 'joinUs']);
 });
 
 
@@ -62,6 +64,9 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
     });
 
 });
+
+
+Route::resource('testimonial', TestimonialController::class);
 
 Route::prefix('/toast')->group(function () {
     Route::get('/', function () {

@@ -1,3 +1,5 @@
+{{--        required: $testimonials         --}}
+
 <section class="client_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
@@ -7,28 +9,30 @@
         </div>
         <div id="carouselExample3Controls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                            <div class="img-box">
-                                <div class="img_box-inner">
-                                    <img src="{{asset('frontend/images/client.jpg')}}" alt="">
+                @foreach($testimonials as $key => $test)
+                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                        <div class="box col-lg-10 mx-auto">
+                            <div class="img_container">
+                                <div class="img-box">
+                                    <div class="img_box-inner">
+                                        <img src="{{asset('storage/' . $test->user->img)}}" alt="">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="detail-box">
-                            <h5>
-                                Anna Trevor
-                            </h5>
-                            <h6>
-                                Customer
-                            </h6>
-                            <p>
-                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                            </p>
+                            <div class="detail-box">
+                                <h5>
+                                    {{ $test->user->name }}
+                                </h5>
+                                <h6>
+                                    {{ $test->user->type_str }}
+                                </h6>
+                                <p>
+                                    {{ $test->content }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
                 <div class="carousel-item">
                     <div class="box col-lg-10 mx-auto">
                         <div class="img_container">

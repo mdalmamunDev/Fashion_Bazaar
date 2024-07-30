@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -25,6 +26,11 @@ class FrontendController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(3)
             ->get();
+
+        $data['testimonials'] = Testimonial::take(10)
+            ->orderBy('likes', 'desc')
+            ->get();
+
         return view('frontend.home', $data);
     }
 
@@ -33,6 +39,16 @@ class FrontendController extends Controller
     }
 
     public function contact() {
-        return view('frontend.contact');
+        $data['resentProducts'] = Product::select('id', 'name', 'details', 'img', 'created_at')
+            ->where('status', '!=', 0)
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('frontend.contact', $data);
+    }
+
+    public function joinUs(Request $request) {
+        return view('backend/auth/signup', ['email' => $request->email]);
     }
 }

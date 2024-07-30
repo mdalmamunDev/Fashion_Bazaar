@@ -35,7 +35,7 @@
 
                                     <label for="email">Email</label>
                                     <div class="mb-3">
-                                        <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email" aria-label="Email" aria-describedby="email-addon" required>
+                                        <input type="email" id="email" name="email" class="form-control" value="{{ $email ?? old('email') }}" placeholder="Email" aria-label="Email" aria-describedby="email-addon" required>
                                     </div>
 
                                     <label for="mobile">Mobile</label>

@@ -5,13 +5,14 @@
                 <div class="col-md-6 offset-md-3">
                     <div class="subscribe_form ">
                         <div class="heading_container heading_center">
-                            <h3>Subscribe To Get Discount Offers</h3>
+                            <h3>Join Us To Get Discount Offers</h3>
                         </div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
-                        <form action="">
-                            <input type="email" placeholder="Enter your email">
+                        <form action="{{ url('join_us') }}" method="post">
+                            {{ csrf_field() }}
+                            <input type="email" name="email" placeholder="Enter your email" style="text-transform: none">
                             <button>
-                                subscribe
+                                join now
                             </button>
                         </form>
                     </div>

@@ -48,4 +48,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
+
+    /**
+     * Get the user type in str
+     *
+     * @return string
+     */
+    public function getTypeStrAttribute()
+    {
+        $typeStr = '';
+
+        switch ($this->attributes['type']) {
+            case 1: $typeStr = 'Super Admin'; break;
+            case 2: $typeStr = 'Admin'; break;
+            default: $typeStr = 'Customer';
+        }
+
+        return $typeStr;
+    }
 }

@@ -29,7 +29,7 @@
                             <h6 class="text-muted mb-0">
                                 @if($product->dis_rate > 0)
                                     <span>
-                                        <span class="text-danger" style="text-decoration: line-through; font-size: 10px">${{ $product->price }}</span><span class="text-success" style="font-size: 8px">({{ '-'.$product->dis_rate.'%' }})</span>
+                                        <span class="text-danger" style="text-decoration: line-through; font-size: 10px">${{ $product->price }}</span><span class="text-success" style="font-size: 8px">({{ '-'.$product->dis_rate_frm.'%' }})</span>
                                     </span>
                                     <br>
                                     ${{ $product->finalPrice}}

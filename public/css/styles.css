@@ -1,0 +1,44 @@
+.object-fit-cover {
+    object-fit: cover !important;
+}
+.box-md {
+    width: 80px;
+    height: 80px;
+}
+.box-bg-r {
+    background-color: #fff0f0
+}
+.img-cover {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+.txt-sm {
+    font-size: 12px !important;
+}
+.txt-md {
+    font-size: 14px !important;
+}
+.txt-trans-none{
+    text-transform: none !important;
+}
+
+
+
+.cat-box {
+    cursor: pointer;
+    text-transform: capitalize;
+}
+.cat-box:hover {
+    transform: scale(1.05, 1.1);
+    transition: 0.5s;
+}
+
+
+
+/*  Admin  */
+.sidebar-user-img-con {
+    width: 50px;
+    height: 55px;
+    border-radius: 100px !important;
+}

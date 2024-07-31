@@ -22,17 +22,23 @@
                         <div class="price mt-3">
                             <h4>Sales: {{ $product->sales }}</h4>
                         </div>
+                        @if($product->dis_rate > 0)
+                            <div class="price mt-3">
+                                <h4>Offer: {{ $product->dis_rate_frm }}% off, save {{ $product->price - $product->final_price }}$</h4>
+                            </div>
+                        @endif
                         <div class="price mt-3">
-                            <h4>Offer: {{ $product->dis_rate_frm }}% off, save {{ $product->price - $product->final_price }}$</h4>
-                        </div>
-                        <div class="price mt-3">
-                            <h4 class="text-success"><strong>Price:</strong>
-                                <span class="text-danger" style="text-decoration: line-through; font-size: 14px">
+                            <h4 class="">Price:
+                                @if($product->dis_rate > 0)
+                                    <span class="text-danger" style="text-decoration: line-through; font-size: 14px">
+                                        {{ $product->price }}$
+                                    </span>
+                                    <span class="text-success" style="margin-left: 10px">
+                                        {{ $product->finalPrice }}$
+                                    </span>
+                                @else
                                     {{ $product->price }}$
-                                </span>
-                                <span class="text-success" style="margin-left: 10px">
-                                    {{ $product->finalPrice }}$
-                                </span>
+                                @endif
                             </h4>
                         </div>
                         <div class="action-buttons mt-4">

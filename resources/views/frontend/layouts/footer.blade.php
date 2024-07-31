@@ -51,11 +51,12 @@
                                 <p>Subscribe by our newsletter and get update protidin.</p>
                             </div>
                             <div class="form_sub">
-                                <form>
+                                <form  action="{{ url('join_us') }}" method="post">
+                                    {{ csrf_field() }}
                                     <fieldset>
                                         <div class="field">
-                                            <input type="email" placeholder="Enter Your Mail" name="email" />
-                                            <input type="submit" value="Subscribe" />
+                                            <input type="email" placeholder="Enter Your Mail" name="email" class="txt-trans-none" />
+                                            <input type="submit" value="Join Now" />
                                         </div>
                                     </fieldset>
                                 </form>

@@ -10,7 +10,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
                         <form action="{{ url('join_us') }}" method="post">
                             {{ csrf_field() }}
-                            <input type="email" name="email" placeholder="Enter your email" style="text-transform: none">
+                            <input type="email" name="email" placeholder="Enter your email" class="txt-trans-none">
                             <button>
                                 join now
                             </button>

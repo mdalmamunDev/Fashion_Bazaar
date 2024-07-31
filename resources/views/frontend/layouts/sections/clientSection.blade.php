@@ -15,7 +15,7 @@
                             <div class="img_container">
                                 <div class="img-box">
                                     <div class="img_box-inner">
-                                        <img src="{{asset('storage/' . $test->user->img)}}" alt="">
+                                        <img src="{{asset('storage/' . $test->user->img)}}" class="img-cover" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -33,50 +33,6 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="carousel-item">
-                    <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                            <div class="img-box">
-                                <div class="img_box-inner">
-                                    <img src="{{asset('frontend/images/client.jpg')}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="detail-box">
-                            <h5>
-                                Anna Trevor
-                            </h5>
-                            <h6>
-                                Customer
-                            </h6>
-                            <p>
-                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="box col-lg-10 mx-auto">
-                        <div class="img_container">
-                            <div class="img-box">
-                                <div class="img_box-inner">
-                                    <img src="{{asset('frontend/images/client.jpg')}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="detail-box">
-                            <h5>
-                                Anna Trevor
-                            </h5>
-                            <h6>
-                                Customer
-                            </h6>
-                            <p>
-                                Dignissimos reprehenderit repellendus nobis error quibusdam? Atque animi sint unde quis reprehenderit, et, perspiciatis, debitis totam est deserunt eius officiis ipsum ducimus ad labore modi voluptatibus accusantium sapiente nam! Quaerat.
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="carousel_btn_box">
                 <a class="carousel-control-prev" href="#carouselExample3Controls" role="button" data-slide="prev">

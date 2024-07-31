@@ -63,7 +63,7 @@ class Product extends Model
     public function getDisRateFrmAttribute()
     {
         $dis = $this->attributes['dis_rate'];
-        return $dis = (int) $dis ? (int) $dis : $dis;
+        return $dis == (int) $dis ? (int) $dis : $dis;
     }
 }
 

@@ -19,10 +19,8 @@ class UserController extends Controller
 
     public function showList()
     {
-//        $products = Product::select('id', 'name', 'price', 'img')
-//            ->where('status', '!=', 0)
-//            ->get();
-//        return view('frontend.products', compact('products'));
+        $users = User::all();
+        return view('backend.user.userList', compact('users'));
     }
 
     public function create()

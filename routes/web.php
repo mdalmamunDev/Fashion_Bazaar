@@ -23,6 +23,9 @@ Route::prefix('/')->group(function () {
 //        Route::post('/update', [CategoriesControler::class, 'update'])->name('pro.update');
 //        Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('pro.delete');
     });
+    Route::prefix('/category')->group(function () {
+        Route::get('/products/{id}', [FrontendController::class, 'prosByCat'])->name('cat.pros');
+    });
     Route::get('/blog', [FrontendController::class, 'blog']);
     Route::get('/contact', [FrontendController::class, 'contact']);
     Route::post('/join_us', [FrontendController::class, 'joinUs']);
@@ -56,8 +59,8 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
         Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('cat.delete');
     });
     Route::prefix('/user')->group(function () {
+        Route::get('/list', [UserController::class, 'showList'])->name('user.list');
         Route::get('/{userId}', [UserController::class, 'index'])->name('user');
-//        Route::get('/list', [CategoriesControler::class, 'index'])->name('user.list');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
         Route::post('/update', [UserController::class, 'update'])->name('user.update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');

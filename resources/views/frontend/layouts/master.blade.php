@@ -21,6 +21,8 @@
     <link href="{{asset('frontend/css/style.css')}}" rel="stylesheet" />
     <!-- responsive style -->
     <link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet" />
+    <!-- my custom style -->
+    <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
 </head>
 <body>
 

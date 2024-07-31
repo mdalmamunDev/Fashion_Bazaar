@@ -15,5 +15,8 @@
 <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
 <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
 
+<!-- my custom style -->
+<link href="{{asset('css/styles.css')}}" rel="stylesheet" />
+
 {{-- Links for toastr --}}
 <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">

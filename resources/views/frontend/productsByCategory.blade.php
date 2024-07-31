@@ -1,0 +1,51 @@
+@extends('frontend.layouts.master')
+@section('page', $category_name . ' | Products')
+@section('content')
+    <section class="product_section layout_padding">
+        <div class="container">
+            <div class="heading_container heading_center">
+                <h2>
+                    #{{ $category_name }} <span>Products</span>
+                </h2>
+            </div>
+            <div class="row">
+                @foreach ($products as $product)
+                    <div class="col-sm-6 col-md-4 col-lg-4">
+                        <div class="box">
+                            <div class="option_container">
+                                <div class="options">
+                                    <a href="{{ route('pro.show', $product->id) }}" class="option1">
+                                        Details
+                                    </a>
+                                    <a href="" class="option2">
+                                        Buy Now
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="img-box">
+                                {{--                                <img src="{{ asset('frontend/images/p'. ($loop->index % 12 + 1) .'.png') }}" alt="">--}}
+                                <img src="{{ asset('storage/' . $product->img) }}" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    {{ $product->name }}
+                                </h5>
+                                <h6>
+                                    ${{ $product->price }}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                {{ $products->links('pagination::bootstrap-4') }}
+            </div>
+            <div class="btn-box">
+                <a href="{{ url('/') }}">
+                    Go Back
+                </a>
+            </div>
+        </div>
+    </section>
+@endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
@@ -27,6 +28,8 @@ class FrontendController extends Controller
             ->take(3)
             ->get();
 
+        $data['categories'] = Category::where('status', '!=', 0)->get();
+
         $data['testimonials'] = Testimonial::take(10)
             ->orderBy('likes', 'desc')
             ->get();
@@ -50,5 +53,13 @@ class FrontendController extends Controller
 
     public function joinUs(Request $request) {
         return view('backend/auth/signup', ['email' => $request->email]);
+    }
+
+
+    public function prosByCat($id) {
+        $cat = Category::findOrFail($id);
+        $data['category_name'] = $cat->category_name;
+        $data['products'] = $cat->products()->paginate(9);;
+        return view('frontend.productsByCategory', $data);
     }
 }

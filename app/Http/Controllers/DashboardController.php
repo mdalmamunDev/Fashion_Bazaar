@@ -15,7 +15,7 @@ class DashboardController extends Controller
         return view('backend.dashboard', $data);
     }
     public function tables(){
-        $data['users'] = User::all();
+        $data['users'] = User::take(15)->get();
         $data['products'] = Product::take(15)->get();
         $data['categories'] = Category::take(15)->get();
         return view('backend.tables', $data);

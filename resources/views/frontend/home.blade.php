@@ -2,6 +2,7 @@
 @section('page', 'Home')
 @section('content')
     @include('frontend.layouts.sections.heroSection')
+    @include('frontend.layouts.sections.categoriesSection')
     @include('frontend.layouts.sections.whySection')
     @include('frontend.layouts.sections.arrivalSection')
     @include('frontend.layouts.sections.productsSection')

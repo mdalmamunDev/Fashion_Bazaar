@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-        Soft UI Dashboard by Creative Tim
+        Login - FashionBazaar
     </title>
     @include('backend.layouts.links.upperLinks')
 </head>

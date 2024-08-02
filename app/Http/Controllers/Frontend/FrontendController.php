@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Testimonial;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -61,5 +62,11 @@ class FrontendController extends Controller
         $data['category_name'] = $cat->category_name;
         $data['products'] = $cat->products()->paginate(9);;
         return view('frontend.productsByCategory', $data);
+    }
+
+    public function profile($id) {
+        $data['user'] = User::findOrFail($id);
+
+        return view('frontend.profile', $data);
     }
 }

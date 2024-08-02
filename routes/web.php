@@ -29,13 +29,16 @@ Route::prefix('/')->group(function () {
     Route::get('/blog', [FrontendController::class, 'blog']);
     Route::get('/contact', [FrontendController::class, 'contact']);
     Route::post('/join_us', [FrontendController::class, 'joinUs']);
+    Route::get('/profile/{id}', [FrontendController::class, 'profile'])->name('profile');
 });
 
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('doLogin');
-Route::get('/signup', [UserController::class, 'create'])->name('signup');
-Route::post('/signup', [UserController::class, 'store'])->name('doSignup');
+Route::middleware(['auth.redirect.type'])->prefix('/admin')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('doLogin');
+    Route::get('/signup', [UserController::class, 'create'])->name('signup');
+    Route::post('/signup', [UserController::class, 'store'])->name('doSignup');
+});
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth.check'])->prefix('/admin')->group(function () {

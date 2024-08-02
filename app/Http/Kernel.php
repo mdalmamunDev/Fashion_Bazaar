@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
 
 
         'auth.check' => \App\Http\Middleware\AuthCheckMiddleware::class,
+        'auth.redirect.type' => \App\Http\Middleware\RedirectUsersByType::class,
     ];
 }

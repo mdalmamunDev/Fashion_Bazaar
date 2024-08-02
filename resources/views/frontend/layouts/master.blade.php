@@ -22,7 +22,9 @@
     <!-- responsive style -->
     <link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet" />
     <!-- my custom style -->
-    <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
+    <link href="{{asset('assets/css/styles.css')}}" rel="stylesheet" />
+    <!-- for additional styles -->
+    @yield('styles')
 </head>
 <body>
 

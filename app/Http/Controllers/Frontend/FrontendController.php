@@ -65,6 +65,8 @@ class FrontendController extends Controller
     }
 
     public function profile($id) {
+        if (auth()->id() != $id) return redirect()->to('/');
+
         $data['user'] = User::findOrFail($id);
 
         return view('frontend.profile', $data);

@@ -41,6 +41,7 @@ Ensure you have the following installed:
 ### Libraries
 We use those libraries for improve our app
 - Toastr: https://github.com/brian2694/laravel-toastr?tab=readme-ov-file
+- Profile Page: https://bootstrapbrain.com/component/bootstrap-free-profile-template/#code
 
 ### Setup
 

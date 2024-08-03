@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -58,9 +59,12 @@ class UserController extends Controller
 
             $user->save();
 
-            return redirect()->route('login')->with('success', 'Account created successfully. Please log in.');
+
+            Toastr::success('Successfully signed up. Please log in.', 'Signed up!', ["positionClass" => "toast-top-center"]);
+            return redirect()->route('login');
         } catch (\Exception $e) {
-            return redirect()->back()->with('failed', 'An error occurred: ' . $e->getMessage());
+            Toastr::error('An error occurred: ' . $e->getMessage(), 'Sign up failed!', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
         }
     }
 

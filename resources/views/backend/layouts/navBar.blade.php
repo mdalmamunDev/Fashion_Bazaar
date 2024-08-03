@@ -23,7 +23,7 @@
 {{--                        <i class="fa fa-user me-sm-1"></i>--}}
 
                         <span class="d-sm-inline d-none">
-                            @if(auth() && auth()->user())
+                            @if(4==4)
                                 <form role="form" action="{{ route('logout') }}" method="post">
                                     {{ csrf_field() }}
                                         <button type="submit" class="btn btn-link mb-0 ps-0">

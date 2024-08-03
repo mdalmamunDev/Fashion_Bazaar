@@ -11,8 +11,7 @@ class Testimonial extends Model
 
     protected $fillable = [
         'user_id',
-        'content',
-        'likes'
+        'content'
     ];
 
     public function user() {

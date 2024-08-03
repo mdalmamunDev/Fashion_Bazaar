@@ -21,15 +21,17 @@
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <div class="full">
-                        <form action="index.html">
-                            <fieldset>
-                                <input type="text" placeholder="Enter your full name" name="name" required />
-                                <input type="email" placeholder="Enter your email address" name="email" required />
-                                <input type="text" placeholder="Enter subject" name="subject" required />
-                                <textarea placeholder="Enter your message" required></textarea>
-                                <input type="submit" value="Submit" />
-                            </fieldset>
-                        </form>
+                        @if(Auth::check())
+                            <form action="{{ route('testimonial.store') }}" method="post">
+                                <fieldset>
+                                    {{ csrf_field() }}
+                                    <textarea name="content" placeholder="Leave your message or review :)" required></textarea>
+                                    <input type="submit" value="Submit" />
+                                </fieldset>
+                            </form>
+                        @else
+                            <h3 class="text-center mt-5 mb-5 text-danger">Please <a href="{{ route('login') }}">login</a> first to contact us.</h3>
+                        @endif
                     </div>
                 </div>
             </div>

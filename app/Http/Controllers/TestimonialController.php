@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Testimonial;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class TestimonialController extends Controller
@@ -35,7 +36,18 @@ class TestimonialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'content' => 'required|max:500',
+        ]);
+
+
+        Testimonial::create([
+            'user_id' => auth()->id(),
+            'content' => $request->input('content'),
+        ]);
+
+        Toastr::success('Your message send successfully.', 'Message send!', ["positionClass" => "toast-top-center"]);
+        return redirect()->back();
     }
 
     /**

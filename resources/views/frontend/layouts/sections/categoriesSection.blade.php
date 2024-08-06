@@ -12,7 +12,7 @@
             @foreach($categories as $cat)
                 <a href="{{ route('cat.pros', $cat->id) }}" class="col-md-4 mb-4 cat-box">
                     <div class="d-flex align-items-center p-2 bg-danger bg-gradient rounded">
-                        <div class="box-md box-bg-r p-1 rounded">
+                        <div class="box-md box-bg-red-light p-1 rounded">
                             <img src="{{ asset('storage/' . $cat->products[0]->img) }}" class="img-cover" alt="Category Image">
                         </div>
                         <div class="ml-1 text-white">

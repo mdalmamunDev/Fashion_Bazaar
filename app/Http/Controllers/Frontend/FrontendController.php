@@ -68,6 +68,9 @@ class FrontendController extends Controller
         if (auth()->id() != $id) return redirect()->to('/');
 
         $data['user'] = User::findOrFail($id);
+        $data['activities'] = Testimonial::where('user_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('frontend.profile', $data);
     }

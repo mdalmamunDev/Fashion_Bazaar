@@ -92,6 +92,8 @@ class TestimonialController extends Controller
      */
     public function destroy(Testimonial $testimonial)
     {
-        //
+        $testimonial->delete();
+
+        return redirect()->back()->with('success', 'Testimonial deleted successfully.');
     }
 }

@@ -39,7 +39,7 @@ Route::middleware(['auth.redirect.type'])->prefix('/')->group(function () {
 });
 Route::post('/login', [LoginController::class, 'login'])->name('doLogin');
 Route::post('/signup', [UserController::class, 'store'])->name('doSignup');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

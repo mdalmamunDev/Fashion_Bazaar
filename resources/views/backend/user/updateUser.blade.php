@@ -11,16 +11,13 @@
                         <div class="card-header pb-0 text-left bg-transparent">
                             <h3 class="font-weight-bolder text-info text-gradient">{{ isset($user) ? 'Update User' : 'Sign Up' }}</h3>
                             <p class="mb-0">Please provide your information to continue with us</p>
+                            <p class="text-success m-0">{{ session('success') }}</p>
                         </div>
                         <div class="card-body">
                             <form role="form" method="POST" action="{{ isset($user) ? route('user.update') : route('user.store') }}" enctype="multipart/form-data">
                                 @csrf
-                                @if(isset($user))
-                                    <input type="hidden" name="id" value="{{ $user->id }}">
-                                @endif
 
-                                <span class="text-success">{{ session('success') }}</span>
-                                <br/>
+                                <input type="hidden" name="id" value="{{ $user->id }}">
 
 
                                 <label for="name">Name</label>
@@ -33,8 +30,6 @@
                                     <div class="mb-3">
                                         <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email ?? '') }}" placeholder="Email" aria-label="Email" aria-describedby="email-addon" required>
                                     </div>
-                                @else
-                                    <input type="hidden" name="email" value="{{ $user->email }}">
                                 @endif
 
                                 <label for="mobile">Mobile</label>
@@ -62,7 +57,7 @@
                                     <input type="file" id="img" name="img" class="form-control" aria-label="Image" aria-describedby="image-addon">
                                 </div>
 
-                                @if(auth()->user()->id == 1)
+                                @if(auth()->user()->type == 1)
                                     <label for="type">Type</label>
                                     <div class="mb-3">
                                         <select id="type" name="type" class="form-control" aria-label="User Type" aria-describedby="type-addon">

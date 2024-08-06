@@ -19,25 +19,11 @@
                     <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="https://www.creative-tim.com/builder?ref=navbar-soft-ui-dashboard">Online Builder</a>
                 </li>
                 <li class="nav-item d-flex align-items-center">
-{{--                    <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">--}}
-{{--                        <i class="fa fa-user me-sm-1"></i>--}}
-
-                        <span class="d-sm-inline d-none">
-                            @if(4==4)
-                                <form role="form" action="{{ route('logout') }}" method="post">
-                                    {{ csrf_field() }}
-                                        <button type="submit" class="btn btn-link mb-0 ps-0">
-                                            <i class="fa fa-arrow-circle-o-right text-primary fs-4" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Logout" data-bs-original-title="Logout"></i>
-                                        </button>
-                                </form>
-                                <a href="">
-{{--                                    <i class="fas fa-user-edit text-primary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Update" data-bs-original-title="Update"></i><span class="sr-only">Update</span>--}}
-                                </a>
-                            @else
-                                <a href="{{ route('login') }}">Login</a>
-                            @endif
-                        </span>
-{{--                    </a>--}}
+                    <span class="d-sm-inline d-none">
+                        <a href="{{ route('logout') }}" class="btn btn-link mb-0 ps-0">
+                            <i class="fa fa-arrow-circle-o-right text-primary fs-4" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Logout" data-bs-original-title="Logout"></i>
+                        </a>
+                    </span>
                 </li>
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">

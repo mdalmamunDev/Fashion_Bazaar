@@ -5,3 +5,9 @@
 .nav-link:hover {
     color: #910000;
 }
+
+form input {
+    text-transform: none !important
+}
+
+/* messages tab */

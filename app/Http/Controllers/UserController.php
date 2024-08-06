@@ -71,24 +71,23 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $data['types'] = [1 => 'Super Admin', 2 => 'Admin', 3 => 'Regular User'];
+        $data['types'] = [1 => 'Super Admin', 2 => 'Admin', 3 => 'Customer'];
         $data['user'] = User::findOrFail($id);
         return view('backend.user.updateUser', $data);
-        dd($data);
     }
 
     public function update(Request $request)
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users,email,' . $request->id,
-                'mobile' => 'required|string|max:15',
+                'name' => 'nullable|string|max:255',
+                'email' => 'nullable|string|email|max:255|unique:users,email,' . $request->id,
+                'mobile' => 'nullable|string|max:20',
                 'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'bio' => 'nullable|string',
                 'location' => 'nullable|string|max:255',
                 'function' => 'nullable|string|max:255',
-                'type' => 'required|integer|',
+                'type' => 'nullable|integer|',
                 'old_password' => 'nullable|string|min:6',
                 'password' => 'nullable|string|min:6|confirmed',
             ]);
@@ -109,13 +108,13 @@ class UserController extends Controller
                 }
             }
 
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->mobile = $request->mobile;
-            $user->bio = $request->bio;
-            $user->location = $request->location;
-            $user->function = $request->function;
-            $user->type = $request->type;
+            $user->name = $request->name ?? $user->name;
+            $user->email = $request->email ?? $user->email;
+            $user->mobile = $request->mobile ?? $user->mobile;
+            $user->bio = $request->bio ?? $user->bio;
+            $user->location = $request->location ?? $user->location;
+            $user->function = $request->function ?? $user->function;
+            $user->type = $request->type ?? $user->type;
 
             if ($request->hasFile('img')) {
                 // delete prev img
@@ -126,7 +125,9 @@ class UserController extends Controller
 
             $user->save();
 
-            return redirect()->route('user.edit', $user->id)->with('success', 'User updated successfully.');
+            Toastr::success($user->name . ' has been updated', 'Updated successfully!', ["positionClass" => "toast-top-center"]);
+
+            return redirect()->back()->with('success', 'User updated successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('failed', 'An error occurred: ' . $e->getMessage());
         }

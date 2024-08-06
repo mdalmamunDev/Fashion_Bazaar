@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,7 @@ class DashboardController extends Controller
     public function index(){
         $data['products'] = Product::take(10)->get();
         $data['categories'] = Category::take(10)->get();
+        $data['testimonials'] = Testimonial::take(10)->get();
         return view('backend.dashboard', $data);
     }
     public function tables(){

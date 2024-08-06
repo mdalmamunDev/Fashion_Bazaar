@@ -21,12 +21,7 @@
                                 {{ $user->name }}
                             </h5>
                             <p class="mb-0 font-weight-bold text-sm">
-                                @switch($user->type)
-                                    @case(1) Super Admin @break
-                                    @case(2) Admin @break
-                                    @default Regular User
-                                @endswitch
-                                 | {{ $user->function }}
+                                {{ $user->type_str }}
                             </p>
                         </div>
                     </div>
@@ -161,7 +156,7 @@
                                 @if(auth()->user()->type == 1 || auth()->user()->id == $user->id)
                                     <div class="col-md-4 text-end">
                                         <a href="{{ route('user.edit', $user->id) }}">
-                                            <i class="fas fa-user-edit text-primary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Update" data-bs-original-title="Update"></i><span class="sr-only">Update</span>
+                                            <i class="fa fa-edit text-primary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" aria-hidden="true" aria-label="Update" data-bs-original-title="Update"></i><span class="sr-only">Update</span>
                                         </a>
                                     </div>
                                 @endif
@@ -177,18 +172,6 @@
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; {{ $user->mobile }}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ $user->email }}</li>
                                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; {{ $user->location }}</li>
-                                <li class="list-group-item border-0 ps-0 pb-0">
-                                    <strong class="text-dark text-sm">Social:</strong> &nbsp;
-                                    <a class="btn btn-facebook btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                                        <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
-                                    </a>
-                                    <a class="btn btn-twitter btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                                        <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
-                                    </a>
-                                    <a class="btn btn-instagram btn-simple mb-0 ps-1 pe-2 py-0" href="javascript:;">
-                                        <i class="fab fa-instagram fa-lg" aria-hidden="true"></i>
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                     </div>

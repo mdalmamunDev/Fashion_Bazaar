@@ -5,12 +5,19 @@
     width: 25px;
     height: 25px;
 }
+.box-sm {
+    width: 50px;
+    height: 50px;
+}
 .box-md {
     width: 80px;
     height: 80px;
 }
-.box-bg-r {
+.box-bg-red-light {
     background-color: #fff0f0
+}
+.box-bg-red {
+    background-color: #ffb2b2
 }
 .img-cover {
     width: 100% !important;

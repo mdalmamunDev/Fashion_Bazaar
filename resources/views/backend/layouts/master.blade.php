@@ -22,6 +22,7 @@
         @yield('title') - FashionBazaar
     </title>
     @include('backend.layouts.links.upperLinks')
+    @yield('head')
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -104,6 +105,7 @@
 </div>
 
 @include('backend.layouts.links.lowerLinks')
+@yield('script')
 
 {!! Toastr::message() !!}
 </body>

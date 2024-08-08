@@ -80,9 +80,21 @@ class ProductReviewController extends Controller
      * @param  \App\Models\ProductReview  $productReview
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductReview $productReview)
-    {
-        //
+    public function update(Request $request, $id) {
+        try {
+            $this->validate($request, [
+                'comment' => 'nullable|string|max:1000',
+            ]);
+
+            $review = ProductReview::findOrFail($id);
+            $review->comment = $request->input('comment') ?? $review->comment;
+            $review->comment = $request->input('comment') ?? $review->comment;
+            $review->save();
+
+            return redirect()->back()->with('success', 'Comment updated successfully.');
+        }catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**

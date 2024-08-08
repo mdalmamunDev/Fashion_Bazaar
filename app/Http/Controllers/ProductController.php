@@ -13,23 +13,28 @@ class ProductController extends Controller {
 
     public function showOne($id) {
         $product = Product::findOrFail($id);
-        $reviews = $product->reviews;
-        $reviewCount = $reviews->count();
-        $averageRating = $reviews->avg('stars');
 
-        // Calculate the percentage for each star rating
+        $allReviews = $product->reviews;
+
+        $reviewCount = $allReviews->count();
+        $averageRating = $allReviews->avg('stars');
+
         $starDistribution = [];
         for ($i = 5; $i > 0; $i--) {
-            $starDistribution[$i] = ($reviews->where('stars', $i)->count() / $reviewCount) * 100;
+            $starDistribution[$i] = ($allReviews->where('stars', $i)->count() / $reviewCount) * 100;
         }
+
+        $reviews = $product->reviews()->orderBy('created_at', 'desc')->paginate(10);
 
         return view('frontend.product', [
             'product' => $product,
+            'reviews' => $reviews,
             'reviewCount' => $reviewCount,
             'averageRating' => $averageRating,
             'starDistribution' => $starDistribution
         ]);
     }
+
 
     public function showList() {
         $products = Product::select('id', 'name', 'price', 'img')

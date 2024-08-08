@@ -764,7 +764,7 @@
                         </div>
                         <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
                             <h5 class="mb-1">All Ratings and Reviews</h5>
-                            @foreach ($product->reviews as $review)
+                            @foreach ($reviews as $review)
                                 <div class="reviews-members pt-4 pb-4">
                                     <div class="media">
                                         <a href="#">
@@ -781,15 +781,35 @@
                                                 <p class="text-gray">{{ $review->relative_time }}</p>
                                             </div>
                                             <div class="reviews-members-body">
-                                                <p>{{ $review->comment }}</p>
+                                                <p class="comment-text">{{ $review->comment }}</p>
+                                                <form action="{{ route('review.update', $review->id) }}" method="POST" class="edit-comment-form d-none">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <textarea name="comment" class="form-control txt-trans-none">{{ $review->comment }}</textarea>
+                                                    <button type="submit" class="btn btn-danger btn-sm mb-3">Save</button>
+                                                    <button type="button" class="btn btn-secondary btn-sm mb-3 cancel-edit">Cancel</button>
+                                                </form>
                                             </div>
-                                            <div class="reviews-members-footer">
-                                                <a class="text-black" href="#" style="font-size: 20px"><i class="fa fa-thumbs-o-up"></i></a> 856M
-                                                <span class="total-like-user-main ml-2" dir="rtl">
+                                            <div class="reviews-members-footer d-flex justify-content-between">
+                                                <div>
+                                                    <a class="text-black" href="#" style="font-size: 20px"><i class="fa fa-thumbs-o-up"></i></a> 856M
+                                                    <span class="total-like-user-main ml-2" dir="rtl">
                                                     <!-- You can add logic here to display users who liked the comment -->
                                                     <a data-toggle="tooltip" data-placement="top" title="User 1" href="#"><img alt="User 1" src="http://bootdey.com/img/Content/avatar/avatar5.png" class="total-like-user rounded-pill"></a>
                                                     <a data-toggle="tooltip" data-placement="top" title="User 2" href="#"><img alt="User 2" src="http://bootdey.com/img/Content/avatar/avatar2.png" class="total-like-user rounded-pill"></a>
                                                 </span>
+                                                </div>
+                                                @if(auth()->user()->type == 1 || $review->user->id == auth()->user()->id)
+                                                    <div>
+                                                        @if(auth()->user()->type == 1)
+                                                            <span class="text-black ml-3" style="font-size: 20px"><i class="fa fa-eye-slash"></i></span>
+                                                        @endif
+                                                        @if($review->user->id == auth()->user()->id)
+                                                            <span class="text-black edit-comment" style="font-size: 20px"><i class="fa fa-edit"></i></span>
+                                                        @endif
+                                                        <span class="text-black ml-3" style="font-size: 20px"><i class="fa fa-trash-o"></i></span>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -797,7 +817,9 @@
                             @endforeach
 
                             <hr>
-                            <a class="text-center w-100 d-block mt-4 font-weight-bold text-danger" href="#">See All Reviews</a>
+                            <div class="d-flex justify-content-center mt-4">
+                                {{ $reviews->links('pagination::bootstrap-4') }}
+                            </div>
                         </div>
                         <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
                             @if(Auth::check())
@@ -805,7 +827,7 @@
                                     <h5 class="mb-4">Leave Comment</h5>
                                     <p class="mb-2">Rate the Product</p>
 
-                                    <form id="reviewForm" action="{{ route('comment.store') }}" method="post">
+                                    <form id="reviewForm" action="{{ route('review.store') }}" method="post">
                                         {{ csrf_field() }}
                                         <div class="mb-4">
                                             <span class="star-rating">
@@ -820,7 +842,7 @@
                                             <input type="hidden" id="user_id" value="{{ auth()->user()->id }}">
                                         </div>
                                         <div class="form-group">
-                                            <label>Your Comment</label>
+                                            <label for="comment">Your Comment</label>
                                             <textarea class="form-control" id="comment"></textarea>
                                         </div>
                                         <div class="form-group">
@@ -890,6 +912,22 @@
                     }
                 });
             });
+        });
+    </script>
+
+    <script>
+        // Handle the click on the edit icon
+        $('.edit-comment').on('click', function() {
+            let $review = $(this).closest('.reviews-members');
+            $review.find('.comment-text').hide();
+            $review.find('.edit-comment-form').removeClass('d-none').show();
+        });
+
+        // Handle canceling the edit
+        $('.cancel-edit').on('click', function() {
+            var $review = $(this).closest('.reviews-members');
+            $review.find('.comment-text').show();
+            $review.find('.edit-comment-form').hide();
         });
     </script>
 @endsection

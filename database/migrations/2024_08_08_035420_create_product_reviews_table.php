@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('comment', 1000);
             $table->unsignedTinyInteger('stars')->default(1);
+            $table->unsignedTinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

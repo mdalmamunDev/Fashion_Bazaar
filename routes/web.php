@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductReviewController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\UserController;
 use Brian2694\Toastr\Facades\Toastr;
@@ -73,6 +74,7 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
 
 
 Route::resource('testimonial', TestimonialController::class);
+Route::resource('comment', ProductReviewController::class);
 
 Route::prefix('/toast')->group(function () {
     Route::get('/', function () {

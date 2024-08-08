@@ -51,6 +51,7 @@
 {{--        </div>--}}
 {{--    </section>--}}
 
+
     <section class="py-5">
         <div class="container">
             <div class="row gx-5">
@@ -70,14 +71,9 @@
                         </h4>
                         <div class="d-flex flex-row my-3">
                             <div class="text-warning mb-1 mr-2">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half"></i>
-                                <span class="ms-1">
-                                    4.5
-                                </span>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <i class="fa {{ $i <= $averageRating ? 'fa-star text-danger' : ($i - 0.5 <= $averageRating ? 'fa-star-half text-danger' : 'fa-star-o text-danger') }}"></i>
+                                @endfor
                             </div>
                             <span class="text-success ml-2">In stock</span>
                         </div>
@@ -735,124 +731,108 @@
                             <h5 class="mb-0 mb-4">Ratings and Reviews</h5>
                             <div class="graph-star-rating-header">
                                 <div class="star-rating">
-                                    <a href="#"><i class="fa fa-star text-danger"></i></a>
-                                    <a href="#"><i class="fa fa-star text-danger"></i></a>
-                                    <a href="#"><i class="fa fa-star text-danger"></i></a>
-                                    <a href="#"><i class="fa fa-star-half text-danger"></i></a> <b class="text-black ml-2">334</b>
+                                    <!-- Display average star rating dynamically -->
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <a href="#">
+                                            <i class="fa {{ $i <= $averageRating ? 'fa-star text-danger' : ($i - 0.5 <= $averageRating ? 'fa-star-half text-danger' : 'fa-star-o text-danger') }}"></i>
+                                        </a>
+                                    @endfor
+                                    <b class="text-black ml-2">{{ $reviewCount }}</b>
                                 </div>
-                                <p class="text-black mb-4 mt-2">Rated 3.5 out of 5</p>
+                                <p class="text-black mb-4 mt-2">
+                                    <!-- set average number of review stars -->
+                                    Rated {{ round($averageRating, 1) }} out of 5
+                                </p>
                             </div>
                             <div class="graph-star-rating-body">
-                                <div class="rating-list">
-                                    <div class="rating-list-left text-black">
-                                        5 Star
-                                    </div>
-                                    <div class="rating-list-center">
-                                        <div class="progress">
-                                            <div style="width: 56%" aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-danger">
-                                                <span class="sr-only">80% Complete (danger)</span>
+                                @foreach ($starDistribution as $stars => $percentage)
+                                    <div class="rating-list">
+                                        <div class="rating-list-left text-black">
+                                            {{ $stars }} Star
+                                        </div>
+                                        <div class="rating-list-center">
+                                            <div class="progress">
+                                                <div style="width: {{ $percentage }}%" aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-danger">
+                                                    <span class="sr-only">{{ $percentage }}% Complete (danger)</span>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="rating-list-right text-black">{{ round($percentage, 2) }}%</div>
                                     </div>
-                                    <div class="rating-list-right text-black">56%</div>
-                                </div>
-                                <div class="rating-list">
-                                    <div class="rating-list-left text-black">
-                                        4 Star
-                                    </div>
-                                    <div class="rating-list-center">
-                                        <div class="progress">
-                                            <div style="width: 23%" aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-danger">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rating-list-right text-black">23%</div>
-                                </div>
-                                <div class="rating-list">
-                                    <div class="rating-list-left text-black">
-                                        3 Star
-                                    </div>
-                                    <div class="rating-list-center">
-                                        <div class="progress">
-                                            <div style="width: 11%" aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-danger">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rating-list-right text-black">11%</div>
-                                </div>
-                                <div class="rating-list">
-                                    <div class="rating-list-left text-black">
-                                        2 Star
-                                    </div>
-                                    <div class="rating-list-center">
-                                        <div class="progress">
-                                            <div style="width: 2%" aria-valuemax="5" aria-valuemin="0" aria-valuenow="5" role="progressbar" class="progress-bar bg-danger">
-                                                <span class="sr-only">80% Complete (danger)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="rating-list-right text-black">02%</div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
                             <h5 class="mb-1">All Ratings and Reviews</h5>
-                            <div class="reviews-members pt-4 pb-4">
-                                <div class="media">
-                                    <a href="#"><img alt="Generic placeholder image" src="http://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-pill"></a>
-                                    <div class="media-body">
-                                        <div class="reviews-members-header">
-                                            <span class="star-rating float-right">
-                                                  <i class="fa fa-star text-danger"></i>
-                                                  <i class="fa fa-star text-danger"></i>
-                                                  <i class="fa fa-star text-danger"></i>
-                                                  <i class="fa fa-star text-danger"></i>
-                                                  <i class="fa fa-star-half text-danger"></i>
-                                            </span>
-                                            <h6 class="mb-1"><a class="text-black" href="#">Singh Osahan</a></h6>
-                                            <p class="text-gray">Tue, 20 Mar 2020</p>
-                                        </div>
-                                        <div class="reviews-members-body">
-                                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections </p>
-                                        </div>
-                                        <div class="reviews-members-footer">
-                                            <a class="text-black" href="#" style="font-size: 20px"><i class="fa fa-thumbs-o-up"></i> </a>856M
-                                            <span class="total-like-user-main ml-2" dir="rtl">
-                                                <a data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="Gurdeep Osahan"><img alt="Generic placeholder image" src="http://bootdey.com/img/Content/avatar/avatar5.png" class="total-like-user rounded-pill"></a>
-                                                <a data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="Gurdeep Singh"><img alt="Generic placeholder image" src="http://bootdey.com/img/Content/avatar/avatar2.png" class="total-like-user rounded-pill"></a>
-                                                <a data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="Askbootstrap"><img alt="Generic placeholder image" src="http://bootdey.com/img/Content/avatar/avatar3.png" class="total-like-user rounded-pill"></a>
-                                                <a data-toggle="tooltip" data-placement="top" title="" href="#" data-original-title="Osahan"><img alt="Generic placeholder image" src="http://bootdey.com/img/Content/avatar/avatar4.png" class="total-like-user rounded-pill"></a>
-                                            </span>
+                            @foreach ($product->reviews as $review)
+                                <div class="reviews-members pt-4 pb-4">
+                                    <div class="media">
+                                        <a href="#">
+                                            <img alt="{{ $review->user->name }}" src="{{ asset('storage/' . $review->user->img) ?? 'http://bootdey.com/img/Content/avatar/avatar1.png' }}" class="mr-3 rounded-pill">
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="reviews-members-header">
+                                                <span class="star-rating float-right">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <i class="fa {{ $i <= $review->stars ? 'fa-star text-danger' : 'fa-star-o text-danger' }}"></i>
+                                                    @endfor
+                                                </span>
+                                                <h6 class="mb-1"><a class="text-black" href="#">{{ $review->user->name }}</a></h6>
+                                                <p class="text-gray">{{ $review->relative_time }}</p>
+                                            </div>
+                                            <div class="reviews-members-body">
+                                                <p>{{ $review->comment }}</p>
+                                            </div>
+                                            <div class="reviews-members-footer">
+                                                <a class="text-black" href="#" style="font-size: 20px"><i class="fa fa-thumbs-o-up"></i></a> 856M
+                                                <span class="total-like-user-main ml-2" dir="rtl">
+                                                    <!-- You can add logic here to display users who liked the comment -->
+                                                    <a data-toggle="tooltip" data-placement="top" title="User 1" href="#"><img alt="User 1" src="http://bootdey.com/img/Content/avatar/avatar5.png" class="total-like-user rounded-pill"></a>
+                                                    <a data-toggle="tooltip" data-placement="top" title="User 2" href="#"><img alt="User 2" src="http://bootdey.com/img/Content/avatar/avatar2.png" class="total-like-user rounded-pill"></a>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
+
                             <hr>
                             <a class="text-center w-100 d-block mt-4 font-weight-bold text-danger" href="#">See All Reviews</a>
                         </div>
                         <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
-                            <h5 class="mb-4">Leave Comment</h5>
-                            <p class="mb-2">Rate the Place</p>
-                            <div class="mb-4">
-                            <span class="star-rating">
-                                     <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                     <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                     <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                     <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                     <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                                     </span>
-                            </div>
-                            <form>
-                                <div class="form-group">
-                                    <label>Your Comment</label>
-                                    <textarea class="form-control"></textarea>
+                            @if(Auth::check())
+                                <div>
+                                    <h5 class="mb-4">Leave Comment</h5>
+                                    <p class="mb-2">Rate the Product</p>
+
+                                    <form id="reviewForm" action="{{ route('comment.store') }}" method="post">
+                                        {{ csrf_field() }}
+                                        <div class="mb-4">
+                                            <span class="star-rating">
+                                                <i class="fa fa-star text-danger" data-value="1"></i>
+                                                <i class="fa fa-star-o text-danger" data-value="2"></i>
+                                                <i class="fa fa-star-o text-danger" data-value="3"></i>
+                                                <i class="fa fa-star-o text-danger" data-value="4"></i>
+                                                <i class="fa fa-star-o text-danger" data-value="5"></i>
+                                            </span>
+                                            <input type="hidden" id="star_count" value="1">
+                                            <input type="hidden" id="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" id="user_id" value="{{ auth()->user()->id }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Your Comment</label>
+                                            <textarea class="form-control" id="comment"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-danger btn-sm" type="submit">Submit Review</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="form-group">
-                                    <button class="btn btn-danger btn-sm" type="button"> Submit Comment </button>
-                                </div>
-                            </form>
+                            @else
+                                @component('frontend.layouts.noLoginAlert')
+                                    @slot('motive', 'comment')
+                                @endcomponent
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -864,4 +844,52 @@
 @section('styles')
     <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css" integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('frontend/css/product.css') }}">
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            // Handle star clicking
+            $('.star-rating i').on('click', function() {
+                var starValue = $(this).data('value'); // Get the star value
+                $('#star_count').val(starValue); // Set the value in the hidden input
+
+                // Reset all stars to empty
+                $('.star-rating i').removeClass('fa-star').addClass('fa-star-o');
+
+                // Highlight the selected stars
+                for (var i = 1; i <= starValue; i++) {
+                    $('.star-rating i[data-value="' + i + '"]').removeClass('fa-star-o').addClass('fa-star');
+                }
+            });
+
+
+            // Handle form submission via AJAX
+            $('#reviewForm').on('submit', function (e){
+                e.preventDefault();
+
+                let formData = {
+                    _token: $('input[name="_token"]').val(),
+                    product_id: $('#product_id').val(),
+                    user_id: $('#user_id').val(),
+                    stars: $('#star_count').val(),
+                    comment: $('#comment').val()
+                };
+
+                $.ajax({
+                    url: $('#reviewForm').attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        // alert(' submitted successfully!');
+                        location.reload();
+                    },
+                    error: function(response) {
+                        console.log(response.responseText);
+                        alert('Failed to submit comment.');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

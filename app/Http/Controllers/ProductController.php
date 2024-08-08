@@ -12,8 +12,23 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller {
 
     public function showOne($id) {
-        $data['product'] = Product::findOrFail($id);
-        return view('frontend.product', $data);
+        $product = Product::findOrFail($id);
+        $reviews = $product->reviews;
+        $reviewCount = $reviews->count();
+        $averageRating = $reviews->avg('stars');
+
+        // Calculate the percentage for each star rating
+        $starDistribution = [];
+        for ($i = 5; $i > 0; $i--) {
+            $starDistribution[$i] = ($reviews->where('stars', $i)->count() / $reviewCount) * 100;
+        }
+
+        return view('frontend.product', [
+            'product' => $product,
+            'reviewCount' => $reviewCount,
+            'averageRating' => $averageRating,
+            'starDistribution' => $starDistribution
+        ]);
     }
 
     public function showList() {

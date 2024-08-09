@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    public function index() {
-        return view('backend.auth.login');
+    public function index($preUrl = null) {
+        dd($preUrl);
+        return view('backend.auth.login', ['prevUrl' => $preUrl]);
     }
 
     public function login(Request $request) {

@@ -1,6 +1,6 @@
 <div class="my-5">
     <div class="d-flex justify-content-center">
-        <a href="{{ route('login') }}">
+        <a href="{{ route('login', ['preUrl'=> $preUrl]) }}">
             <img src="{{ asset('frontend/animations/do-login.gif') }}" alt="do login">
         </a>
     </div>

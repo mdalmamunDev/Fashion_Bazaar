@@ -12,6 +12,7 @@
 
 <body class="">
 <main class="main-content  mt-0">
+{{--    {{ $preUrl }}--}}
     <section>
         <div class="page-header min-vh-100">
             <div class="container">

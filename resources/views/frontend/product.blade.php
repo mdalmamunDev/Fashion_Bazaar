@@ -799,7 +799,7 @@
                                                     <a data-toggle="tooltip" data-placement="top" title="User 2" href="#"><img alt="User 2" src="http://bootdey.com/img/Content/avatar/avatar2.png" class="total-like-user rounded-pill"></a>
                                                 </span>
                                                 </div>
-                                                @if(auth()->user()->type == 1 || $review->user->id == auth()->user()->id)
+                                                @if(auth()->user() && (auth()->user()->type == 1 || $review->user->id == auth()->user()->id))
                                                     <div>
                                                         @if(auth()->user()->type == 1)
                                                             <span class="text-black ml-3" style="font-size: 20px"><i class="fa fa-eye-slash"></i></span>
@@ -853,6 +853,7 @@
                             @else
                                 @component('frontend.layouts.noLoginAlert')
                                     @slot('motive', 'comment')
+                                    @slot('preUrl', url()->current())
                                 @endcomponent
                             @endif
                         </div>

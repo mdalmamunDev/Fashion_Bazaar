@@ -35,7 +35,7 @@ Route::prefix('/')->group(function () {
 
 
 Route::middleware(['auth.redirect.type'])->prefix('/')->group(function () {
-    Route::get('/login/{preUrl?}', [LoginController::class, 'index'])->name('login');
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::get('/signup', [UserController::class, 'create'])->name('signup');
 });
 Route::post('/login', [LoginController::class, 'login'])->name('doLogin');

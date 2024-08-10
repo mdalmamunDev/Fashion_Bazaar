@@ -821,7 +821,7 @@
                                 {{ $reviews->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
-                        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
+                        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page" id="review-area">
                             @if(Auth::check())
                                 <div>
                                     <h5 class="mb-4">Leave Comment</h5>
@@ -853,7 +853,7 @@
                             @else
                                 @component('frontend.layouts.noLoginAlert')
                                     @slot('motive', 'comment')
-                                    @slot('preUrl', url()->current())
+                                    @slot('preUrl', urlencode(url()->current().'#review-area')) {{-- Encode the current URL --}}
                                 @endcomponent
                             @endif
                         </div>

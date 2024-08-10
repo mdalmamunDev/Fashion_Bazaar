@@ -12,7 +12,6 @@
 
 <body class="">
 <main class="main-content  mt-0">
-{{--    {{ $preUrl }}--}}
     <section>
         <div class="page-header min-vh-100">
             <div class="container">
@@ -27,6 +26,7 @@
                             <div class="card-body">
                                 <form role="form" action="{{ route('doLogin') }}" method="post">
                                     {{ csrf_field() }}
+                                    <input type="hidden" name="preUrl" value="{{ $preUrl }}">
                                     <label>Email</label>
                                     <div class="mb-3">
                                         <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
@@ -47,7 +47,7 @@
                             <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                 <p class="mb-4 text-sm mx-auto">
                                     Don't have an account?
-                                    <a href="{{ route('signup') }}" class="text-info text-gradient font-weight-bold">Sign up</a>
+                                    <a href="{{ route('signup', ['preUrl' => $preUrl]) }}" class="text-info text-gradient font-weight-bold">Sign up</a>
                                 </p>
                             </div>
                         </div>

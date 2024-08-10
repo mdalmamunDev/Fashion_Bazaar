@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    public function index($preUrl = null) {
-        dd($preUrl);
-        return view('backend.auth.login', ['prevUrl' => $preUrl]);
+    public function index(Request $request) {
+        $preUrl = $request->query('preUrl', '/');
+        return view('backend.auth.login', ['preUrl' => $preUrl]);
     }
 
     public function login(Request $request) {
@@ -23,6 +23,10 @@ class LoginController extends Controller
         $login = Auth::attempt($credantial);
 
         if ($login){
+            $preUrl = $request->input('preUrl');
+            if (isset($preUrl))
+                return redirect()->to(urldecode($preUrl));
+
             return redirect()->route('after.login');
         }else{
             Session::flash('failed', 'Login Failed');

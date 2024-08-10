@@ -28,6 +28,8 @@
                                 <form role="form" action="{{ route('doSignup') }}" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
 
+                                    <input type="hidden" name="preUrl" value="{{ $preUrl }}">
+
                                     <label for="name">Name</label>
                                     <div class="mb-3">
                                         <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" placeholder="Name" aria-label="Name" aria-describedby="name-addon" required>

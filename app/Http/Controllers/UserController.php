@@ -24,9 +24,10 @@ class UserController extends Controller
         return view('backend.user.userList', compact('users'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('backend.auth.signup');
+        $preUrl = $request->query('preUrl', '/');
+        return view('backend.auth.signup', ['preUrl' => $preUrl]);
     }
 
     public function store(Request $request)
@@ -61,7 +62,7 @@ class UserController extends Controller
 
 
             Toastr::success('Successfully signed up. Please log in.', 'Signed up!', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('login');
+            return redirect()->route('login', ['preUrl' => $request->input('preUrl')]);
         } catch (\Exception $e) {
             Toastr::error('An error occurred: ' . $e->getMessage(), 'Sign up failed!', ["positionClass" => "toast-top-center"]);
             return redirect()->back();

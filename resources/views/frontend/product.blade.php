@@ -72,7 +72,7 @@
                         <div class="d-flex flex-row my-3">
                             <div class="text-warning mb-1 mr-2">
                                 @for ($i = 1; $i <= 5; $i++)
-                                    <i class="fa {{ $i <= $averageRating ? 'fa-star text-danger' : ($i - 0.5 <= $averageRating ? 'fa-star-half text-danger' : 'fa-star-o text-danger') }}"></i>
+                                    <i class="text-danger {{ $i <= $averageRating ? 'fa-solid fa-star' : ($i - 0.5 <= $averageRating ? 'fa-solid fa-star-half-stroke' : 'fa-regular fa-star') }}"></i>
                                 @endfor
                             </div>
                             <span class="text-success ml-2">In stock</span>
@@ -734,7 +734,7 @@
                                     <!-- Display average star rating dynamically -->
                                     @for ($i = 1; $i <= 5; $i++)
                                         <a href="#">
-                                            <i class="fa {{ $i <= $averageRating ? 'fa-star text-danger' : ($i - 0.5 <= $averageRating ? 'fa-star-half text-danger' : 'fa-star-o text-danger') }}"></i>
+                                            <i class="text-danger {{ $i <= $averageRating ? 'fa-solid fa-star' : ($i - 0.5 <= $averageRating ? 'fa-solid fa-star-half-stroke' : 'fa-regular fa-star-o') }}"></i>
                                         </a>
                                     @endfor
                                     <b class="text-black ml-2">{{ $reviewCount }}</b>
@@ -774,7 +774,7 @@
                                             <div class="reviews-members-header">
                                                 <span class="star-rating float-right">
                                                     @for ($i = 1; $i <= 5; $i++)
-                                                        <i class="fa {{ $i <= $review->stars ? 'fa-star text-danger' : 'fa-star-o text-danger' }}"></i>
+                                                        <i class="text-danger {{ $i <= $review->stars ? 'fa-solid fa-star' : 'fa-regular fa-star-o' }}"></i>
                                                     @endfor
                                                 </span>
                                                 <h6 class="mb-1"><a class="text-black" href="#">{{ $review->user->name }}</a></h6>
@@ -792,7 +792,7 @@
                                             </div>
                                             <div class="reviews-members-footer d-flex justify-content-between">
                                                 <div>
-                                                    <a class="text-black" href="#" style="font-size: 20px"><i class="fa fa-thumbs-o-up"></i></a> 856M
+                                                    <a class="text-black" href="#" style="font-size: 20px"><i class="fa-regular fa-thumbs-o-up"></i></a> 856M
                                                     <span class="total-like-user-main ml-2" dir="rtl">
                                                     <!-- You can add logic here to display users who liked the comment -->
                                                     <a data-toggle="tooltip" data-placement="top" title="User 1" href="#"><img alt="User 1" src="http://bootdey.com/img/Content/avatar/avatar5.png" class="total-like-user rounded-pill"></a>
@@ -814,9 +814,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if (!$loop->last)
+                                    <hr>
+                                @endif
                             @endforeach
-
-                            <hr>
                             <div class="d-flex justify-content-center mt-4">
                                 {{ $reviews->links('pagination::bootstrap-4') }}
                             </div>
@@ -831,11 +832,11 @@
                                         {{ csrf_field() }}
                                         <div class="mb-4">
                                             <span class="star-rating">
-                                                <i class="fa fa-star text-danger" data-value="1"></i>
-                                                <i class="fa fa-star-o text-danger" data-value="2"></i>
-                                                <i class="fa fa-star-o text-danger" data-value="3"></i>
-                                                <i class="fa fa-star-o text-danger" data-value="4"></i>
-                                                <i class="fa fa-star-o text-danger" data-value="5"></i>
+                                                <i class="fa-solid fa-star text-danger" data-value="1"></i>
+                                                <i class="fa-regular fa-star-o text-danger" data-value="2"></i>
+                                                <i class="fa-regular fa-star-o text-danger" data-value="3"></i>
+                                                <i class="fa-regular fa-star-o text-danger" data-value="4"></i>
+                                                <i class="fa-regular fa-star-o text-danger" data-value="5"></i>
                                             </span>
                                             <input type="hidden" id="star_count" value="1">
                                             <input type="hidden" id="product_id" value="{{ $product->id }}">
@@ -843,7 +844,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="comment">Your Comment</label>
-                                            <textarea class="form-control" id="comment"></textarea>
+                                            <textarea class="form-control txt-trans-none" id="comment"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <button class="btn btn-danger btn-sm" type="submit">Submit Review</button>
@@ -857,6 +858,21 @@
                                 @endcomponent
                             @endif
                         </div>
+                        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page" id="review-area">
+                            <div class="social-share d-flex justify-content-between">
+                                <h3 class="text-center">Share this page</h3>
+                                {!!
+                                    Share::page(url()->current(), 'Check out this awesome content!')
+                                        ->facebook()
+                                        ->twitter()
+                                        ->linkedin()
+                                        ->telegram()
+                                        ->whatsapp()
+                                        ->reddit();
+
+                                !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -867,6 +883,8 @@
 @section('styles')
     <link rel="stylesheet" href="https://allyoucan.cloud/cdn/icofont/1.0.1/icofont.css" integrity="sha384-jbCTJB16Q17718YM9U22iJkhuGbS0Gd2LjaWb4YJEZToOPmnKDjySVa323U+W7Fv" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('frontend/css/product.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('frontend/css/social-share.css') }}">
 @endsection
 
 @section('script')
@@ -878,11 +896,11 @@
                 $('#star_count').val(starValue); // Set the value in the hidden input
 
                 // Reset all stars to empty
-                $('.star-rating i').removeClass('fa-star').addClass('fa-star-o');
+                $('.star-rating i').removeClass('fa-solid fa-star').addClass('fa-regular fa-star-o');
 
                 // Highlight the selected stars
                 for (var i = 1; i <= starValue; i++) {
-                    $('.star-rating i[data-value="' + i + '"]').removeClass('fa-star-o').addClass('fa-star');
+                    $('.star-rating i[data-value="' + i + '"]').removeClass('fa-regular fa-star-o').addClass('fa-solid fa-star');
                 }
             });
 
@@ -931,4 +949,9 @@
             $review.find('.edit-comment-form').hide();
         });
     </script>
+
+
+{{--    social share    --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/share.js') }}"></script>
 @endsection

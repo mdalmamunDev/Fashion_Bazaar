@@ -1,0 +1,25 @@
+.social-share {
+    padding-top: 50px;
+    margin-top: 60px;
+}
+#social-links > ul{
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding-left: 0;
+}
+
+#social-links > ul > li {
+    margin-inline: 10px;
+}
+
+#social-links span {
+    font-size: 30px;
+    color: red;
+    transition: 0.5s;
+}
+
+#social-links span:hover {
+    transform: scale(1.2);
+    color: #b70000;
+}

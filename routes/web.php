@@ -75,6 +75,7 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
 
 Route::resource('testimonial', TestimonialController::class);
 Route::resource('review', ProductReviewController::class);
+Route::post('review/like', [ProductReviewController::class, 'like'])->name('review.like');
 
 Route::prefix('/toast')->group(function () {
     Route::get('/', function () {

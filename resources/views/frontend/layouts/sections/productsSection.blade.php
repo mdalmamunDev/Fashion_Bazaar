@@ -24,7 +24,7 @@
                         </div>
                         <div class="detail-box">
                             <h5 class="mb-1">
-                                {{ $product->name }} Hi this is another heading for this item
+                                {{ $product->name }}
                             </h5>
                             <h6 class="text-muted mb-0">
                                 @if($product->dis_rate > 0)

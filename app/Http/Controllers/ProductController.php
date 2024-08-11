@@ -37,7 +37,7 @@ class ProductController extends Controller {
 
 
     public function showList() {
-        $products = Product::select('id', 'name', 'price', 'img')
+        $products = Product::select('id', 'name', 'price', 'img', 'dis_rate')
             ->where('status', '!=', 0)
             ->paginate(9);
         return view('frontend.products', compact('products'));

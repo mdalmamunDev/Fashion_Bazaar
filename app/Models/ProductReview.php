@@ -23,6 +23,9 @@ class ProductReview extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function likes() {
+        return $this->hasMany(ProductReviewLike::class, 'review_id');
+    }
 
 
     /**

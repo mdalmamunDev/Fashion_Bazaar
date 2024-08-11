@@ -74,7 +74,7 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'name' => 'Bruce Wayne',
-                'email' => 'bruce.wayne@gmail.com',
+                'email' => 'user2@gmail.com',
                 'password' => Hash::make('123456'),
                 'type' => 3,
                 'img' => 'images/Bruce Wayne.jpg',
@@ -85,7 +85,7 @@ class UserTableSeeder extends Seeder
             ],
             [
                 'name' => 'Diana Prince',
-                'email' => 'diana.prince@gmail.com',
+                'email' => 'user3@gmail.com',
                 'password' => Hash::make('123456'),
                 'type' => 3,
                 'img' => 'images/Diana Prince.jpg',

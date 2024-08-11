@@ -762,7 +762,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews">
+                        <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews" id="review-area">
                             <h5 class="mb-1">All Ratings and Reviews</h5>
                             @foreach ($reviews as $review)
                                 <div class="reviews-members pt-4 pb-4">
@@ -792,12 +792,15 @@
                                             </div>
                                             <div class="reviews-members-footer d-flex justify-content-between">
                                                 <div>
-                                                    <a class="text-black" href="#" style="font-size: 20px"><i class="fa-regular fa-thumbs-o-up"></i></a> 856M
+                                                    <a class="text-black" style="font-size: 20px" onclick="doLike({{ $review->id }}, {{ auth()->check() ? auth()->user()->id : null}})">
+                                                        <i class="{{ (auth()->check() && $review->likes->contains('user_id', auth()->id())) ? 'fa-solid' : 'fa-regular' }} fa-thumbs-up" id="like-icon-{{ $review->id }}"></i>
+                                                    </a>
+                                                    <span id="like-count-{{ $review->id }}">{{ count($review->likes) }}</span>
                                                     <span class="total-like-user-main ml-2" dir="rtl">
-                                                    <!-- You can add logic here to display users who liked the comment -->
-                                                    <a data-toggle="tooltip" data-placement="top" title="User 1" href="#"><img alt="User 1" src="http://bootdey.com/img/Content/avatar/avatar5.png" class="total-like-user rounded-pill"></a>
-                                                    <a data-toggle="tooltip" data-placement="top" title="User 2" href="#"><img alt="User 2" src="http://bootdey.com/img/Content/avatar/avatar2.png" class="total-like-user rounded-pill"></a>
-                                                </span>
+                                                        @foreach($review->likes->take(3) as $like)
+                                                            <a data-toggle="tooltip" data-placement="top" title="{{ $like->user->name }}" href="#"><img alt="User" src="{{ $like->user->img? asset('storage/' . $like->user->img) : 'http://bootdey.com/img/Content/avatar/avatar2.png' }}" class="total-like-user rounded-pill"></a>
+                                                        @endforeach
+                                                    </span>
                                                 </div>
                                                 @if(auth()->user() && (auth()->user()->type == 1 || $review->user->id == auth()->user()->id))
                                                     <div>
@@ -822,7 +825,7 @@
                                 {{ $reviews->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
-                        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page" id="review-area">
+                        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page" id="leave-review-area">
                             @if(Auth::check())
                                 <div>
                                     <h5 class="mb-4">Leave Comment</h5>
@@ -854,11 +857,11 @@
                             @else
                                 @component('frontend.layouts.noLoginAlert')
                                     @slot('motive', 'comment')
-                                    @slot('preUrl', urlencode(url()->current().'#review-area')) {{-- Encode the current URL --}}
+                                    @slot('preUrl', urlencode(url()->current().'#leave-review-area')) {{-- Encode the current URL --}}
                                 @endcomponent
                             @endif
                         </div>
-                        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page" id="review-area">
+                        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
                             <div class="social-share d-flex justify-content-between">
                                 <h3 class="text-center">Share this page</h3>
                                 {!!
@@ -889,6 +892,8 @@
 
 @section('script')
     <script>
+
+        // make review
         $(document).ready(function() {
             // Handle star clicking
             $('.star-rating i').on('click', function() {
@@ -948,6 +953,41 @@
             $review.find('.comment-text').show();
             $review.find('.edit-comment-form').hide();
         });
+    </script>
+
+{{--  like review--}}
+    <script>
+        function doLike(reviewId, userId) {
+            if (userId) {
+                // Send AJAX request to the server to register the like
+                $.ajax({
+                    url: "{{ route('review.like') }}", // Your route for liking a review
+                    type: 'POST',
+                    data: {
+                        review_id: reviewId,
+                        user_id: userId,
+                        _token: '{{ csrf_token() }}' // Include CSRF token for security
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Update count and btn
+                            $('#like-count-' + reviewId).text(response.likeCount);
+                            $('#like-icon-' + reviewId).toggleClass('fa-solid', response.isLiked).toggleClass('fa-regular', !response.isLiked);
+                        } else {
+                            alert('Something went wrong. Please try again.');
+                        }
+                    },
+                    error: function (e) {
+                        console.log(e.error());
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            } else {
+                if (confirm('Please login first to like.')) {
+                    window.location.href = "{{ route('login', ['preUrl' => urlencode(url()->current().'#review-area')]) }}";
+                }
+            }
+        }
     </script>
 
 

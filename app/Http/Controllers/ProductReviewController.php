@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductReview;
+use App\Models\ProductReviewLike;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use function Symfony\Component\HttpFoundation\Session\Storage\save;
@@ -88,13 +89,37 @@ class ProductReviewController extends Controller
 
             $review = ProductReview::findOrFail($id);
             $review->comment = $request->input('comment') ?? $review->comment;
-            $review->comment = $request->input('comment') ?? $review->comment;
             $review->save();
 
             return redirect()->back()->with('success', 'Comment updated successfully.');
         }catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
+    }
+
+    public function like(Request $request) {
+        $reviewId = $request->input('review_id');
+        $userId = $request->input('user_id');
+
+        // Check if the like already exists
+        $likeExists = ProductReviewLike::where('review_id', $reviewId)
+            ->where('user_id', $userId)
+            ->first();
+
+        if (!$likeExists) {
+            // If the like doesn't exist, create a new like
+            $like = new ProductReviewLike();
+            $like->fill($request->all());
+            $like->save();
+        } else {
+            // If the like exists, remove it (unlike)
+            $likeExists->delete();
+        }
+
+        // Get the updated like count
+        $likeCount = ProductReviewLike::where('review_id', $reviewId)->count();
+
+        return response()->json(['success' => true, 'likeCount' => $likeCount, 'isLiked' => !$likeExists]);
     }
 
     /**

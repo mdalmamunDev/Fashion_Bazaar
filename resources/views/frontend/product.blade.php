@@ -712,7 +712,9 @@
                         <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews" id="review-area">
                             <h5 class="mb-1">All Ratings and Reviews</h5>
                             @foreach ($reviews as $review)
-{{--                                @if()--}}
+                                @if($review->status == 0 && auth()->user()->type != 1)
+                                    @continue
+                                @endif
                                 <div class="reviews-members pt-4 pb-4">
                                     <div class="media">
                                         <a href="#">

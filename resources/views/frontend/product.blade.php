@@ -1,68 +1,15 @@
 @extends('frontend.layouts.master')
 @section('page', $product->name)
 @section('content')
-{{--    <section data-bs-version="5.1" class="container pt-5 pb-5 bg-danger features4 stepm5 cid-tw2LyYgLR1 rounded" id="afeatures4-4">--}}
-{{--        <div class="container-fluid">--}}
-{{--            <div class="row justify-content-start align-items-stretch">--}}
-{{--                <div class="col-12 col-lg-5 d-flex justify-content-center align-items-center">--}}
-{{--                    <div class="image-wrapper">--}}
-{{--                        <img src="{{ asset('storage/'. $product->img) }}" alt="Product Image" class="img-fluid">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="card col-12 col-lg-7 p-3 rounded">--}}
-{{--                    <div class="card-wrapper">--}}
-{{--                        <h1 class="card-title mbr-fonts-style display-3 mb-0"><strong>{{ $product->name }}</strong></h1>--}}
-{{--                        <h4 class="text-muted" style="margin-top: -15px;">{{ $product->category->category_name }}</h4>--}}
-{{--                        <div>--}}
-{{--                            {!! $product->details !!}--}}
-{{--                        </div>--}}
-{{--                        <div class="price mt-3">--}}
-{{--                            <h4>Brand: {{ $product->brand }}</h4>--}}
-{{--                        </div>--}}
-{{--                        <div class="price mt-3">--}}
-{{--                            <h4>Sales: {{ $product->sales }}</h4>--}}
-{{--                        </div>--}}
-{{--                        @if($product->dis_rate > 0)--}}
-{{--                            <div class="price mt-3">--}}
-{{--                                <h4>Offer: {{ $product->dis_rate_frm }}% off, save {{ $product->price - $product->final_price }}$</h4>--}}
-{{--                            </div>--}}
-{{--                        @endif--}}
-{{--                        <div class="price mt-3">--}}
-{{--                            <h4 class="">Price:--}}
-{{--                                @if($product->dis_rate > 0)--}}
-{{--                                    <span class="text-danger" style="text-decoration: line-through; font-size: 14px">--}}
-{{--                                        {{ $product->price }}$--}}
-{{--                                    </span>--}}
-{{--                                    <span class="text-success" style="margin-left: 10px">--}}
-{{--                                        {{ $product->finalPrice }}$--}}
-{{--                                    </span>--}}
-{{--                                @else--}}
-{{--                                    {{ $product->price }}$--}}
-{{--                                @endif--}}
-{{--                            </h4>--}}
-{{--                        </div>--}}
-{{--                        <div class="action-buttons mt-4">--}}
-{{--                            <a href="#" class="btn btn-primary">Add to Cart</a>--}}
-{{--                            <a href="#" class="btn btn-secondary">Go Back</a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </section>--}}
-
-
     <section class="py-5">
         <div class="container">
             <div class="row gx-5">
                 <aside class="col-lg-6">
-                    <div class="border rounded-4 mb-3 d-flex justify-content-center">
+                    <div class="border rounded-4 mb-3 d-flex justify-content-center p-3 box-bg-red-light shadow-sm">
                         <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" href="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big.webp">
                             <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="{{ asset('storage/'. $product->img) }}">
                         </a>
                     </div>
-                    <!-- thumbs-wrap.// -->
-                    <!-- gallery-wrap .end// -->
                 </aside>
                 <main class="col-lg-6">
                     <div class="ps-lg-3">
@@ -765,6 +712,7 @@
                         <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews" id="review-area">
                             <h5 class="mb-1">All Ratings and Reviews</h5>
                             @foreach ($reviews as $review)
+{{--                                @if()--}}
                                 <div class="reviews-members pt-4 pb-4">
                                     <div class="media">
                                         <a href="#">
@@ -805,12 +753,38 @@
                                                 @if(auth()->user() && (auth()->user()->type == 1 || $review->user->id == auth()->user()->id))
                                                     <div>
                                                         @if(auth()->user()->type == 1)
-                                                            <span class="text-black ml-3" style="font-size: 20px"><i class="fa fa-eye-slash"></i></span>
+{{--                                                            <span onclick="checkVisibility()" class="text-black ml-3 cursor-pointer" style="font-size: 20px"><i class="fa fa-eye-slash"></i></span>--}}
+                                                            <form id="hide-review-{{ $review->id }}" action="{{ route('review.update', $review->id) }}" method="POST" style="display: none;">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <input type="hidden" name="status" value="{{ $review->status == 0 ? 1 : 0 }}">
+                                                                <input type="hidden" name="preUrl" value="{{ url()->current().'#review-area' }}">
+                                                            </form>
+                                                            <span onclick="event.preventDefault();
+                                                                    if (confirm('Do you really want to hide this review?')) {
+                                                                    document.getElementById('hide-review-{{ $review->id }}').submit();
+                                                                    }"
+                                                                  class="text-black ml-3 cursor-pointer" style="font-size: 20px">
+                                                                <i class="fa fa-eye{{ $review->status == 1 ? '-slash' : ''}}"></i>
+                                                            </span>
                                                         @endif
                                                         @if($review->user->id == auth()->user()->id)
-                                                            <span class="text-black edit-comment" style="font-size: 20px"><i class="fa fa-edit"></i></span>
+                                                            <span class="text-black ml-3 cursor-pointer edit-comment" style="font-size: 20px"><i class="fa fa-edit"></i></span>
                                                         @endif
-                                                        <span class="text-black ml-3" style="font-size: 20px"><i class="fa fa-trash-o"></i></span>
+                                                        <form id="delete-review-{{ $review->id }}" action="{{ route('review.destroy', $review) }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="preUrl" value="{{ url()->current().'#review-area' }}">
+                                                        </form>
+
+                                                        <a href="#"
+                                                           onclick="event.preventDefault();
+                                                                   if (confirm('Do you really want to delete this review?')) {
+                                                                   document.getElementById('delete-review-{{ $review->id }}').submit();
+                                                                   }"
+                                                           class="text-black ml-3 cursor-pointer" style="font-size: 20px">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </a>
                                                     </div>
                                                 @endif
                                             </div>
@@ -989,7 +963,6 @@
             }
         }
     </script>
-
 
 {{--    social share    --}}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>

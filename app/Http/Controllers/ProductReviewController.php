@@ -89,8 +89,12 @@ class ProductReviewController extends Controller
 
             $review = ProductReview::findOrFail($id);
             $review->comment = $request->input('comment') ?? $review->comment;
+            $review->status = $request->input('status') ?? $review->status;
             $review->save();
 
+            $preUrl = $request->input('preUrl');
+            if (isset($preUrl))
+                return redirect()->to($preUrl)->with('success', 'Comment updated successfully.');
             return redirect()->back()->with('success', 'Comment updated successfully.');
         }catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
@@ -128,8 +132,10 @@ class ProductReviewController extends Controller
      * @param  \App\Models\ProductReview  $productReview
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductReview $productReview)
+    public function destroy(Request $request, ProductReview $review)
     {
-        //
+        $review->delete();
+//        Toastr::error('The review has been removed.', 'Review removed!', ["positionClass" => "toast-top-center"]);
+        return redirect()->to($request->input('preUrl'))->with('success', 'Review deleted successfully.');
     }
 }

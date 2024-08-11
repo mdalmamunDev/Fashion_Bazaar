@@ -52,3 +52,6 @@ We use those libraries for improve our app
    ```bash
    git clone https://github.com/mdalmamun5354/Fashion_Bazaar.git
    cd Fashion_Bazaar
+
+
+localization, sesion, coocie, cach, email verification

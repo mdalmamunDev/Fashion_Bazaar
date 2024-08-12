@@ -38,18 +38,25 @@ class ProductReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'comment' => 'required|max:1000',
-        ]);
+        try{
+            $request->validate([
+                'comment' => 'required|max:1000',
+            ]);
 
 
-        $review = new ProductReview();
-        $review->fill($request->all());
-        $review->save();
+            $review = new ProductReview();
+            $review->fill($request->all());
+            $review->save();
 
-        Toastr::success('Successfully created comment.', 'Comment created!', ["positionClass" => "toast-top-center"]);
+            Toastr::success('Successfully created comment.', 'Comment created!', ["positionClass" => "toast-top-center"]);
 
-        return response()->json(['message' => 'Successfully created comment!', 'status' => 2000] , 200);
+            $preUrl = $request->input('preUrl');
+            if (isset($preUrl))
+                return redirect()->to($preUrl)->with('success', 'Comment stored successfully.');
+            return redirect()->back()->with('success', 'Comment stored successfully.');
+        }  catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -83,6 +90,7 @@ class ProductReviewController extends Controller
      */
     public function update(Request $request, $id) {
         try {
+//            dd($request);
             $this->validate($request, [
                 'comment' => 'nullable|string|max:1000',
             ]);
@@ -90,7 +98,10 @@ class ProductReviewController extends Controller
             $review = ProductReview::findOrFail($id);
             $review->comment = $request->input('comment') ?? $review->comment;
             $review->status = $request->input('status') ?? $review->status;
+            $review->stars = $request->input('stars') ?? $review->stars;
             $review->save();
+
+            Toastr::success('Successfully updated comment.', 'Comment updated!', ["positionClass" => "toast-top-center"]);
 
             $preUrl = $request->input('preUrl');
             if (isset($preUrl))

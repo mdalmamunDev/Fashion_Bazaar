@@ -19,6 +19,9 @@
 .box-bg-red {
     background-color: #ffb2b2
 }
+.bg-hidden {
+    background-color: #d2d2d2;
+}
 .img-cover {
     width: 100% !important;
     height: 100% !important;
@@ -32,6 +35,9 @@
 }
 .txt-trans-none{
     text-transform: none !important;
+}
+.text-hidden {
+    color: gray !important;
 }
 
 .cursor-pointer {

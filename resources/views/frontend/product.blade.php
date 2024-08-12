@@ -22,11 +22,11 @@
                                     <i class="text-danger {{ $i <= $averageRating ? 'fa-solid fa-star' : ($i - 0.5 <= $averageRating ? 'fa-solid fa-star-half-stroke' : 'fa-regular fa-star') }}"></i>
                                 @endfor
                             </div>
-                            <span class="text-success ml-2">In stock</span>
+                            <span class="text-success ml-2">{{ __('product.in_stock') }}</span>
                         </div>
 
                         <div class="row">
-                            <dt class="col-3">Price</dt>
+                            <dt class="col-3">{{ __('product.price') }}</dt>
                             <dd class="col-9">
                                 @if($product->dis_rate > 0)
                                     <span class="text-danger" style="text-decoration: line-through; font-size: 14px">
@@ -45,14 +45,14 @@
                                 <dd class="col-9">{{ $product->dis_rate_frm }}% off, save {{ $product->price - $product->final_price }}$</dd>
                             @endif
 
-                            <dt class="col-3">Brand</dt>
+                            <dt class="col-3">{{ __('product.brand') }}</dt>
                             <dd class="col-9">{{ $product->brand }}</dd>
 
-                            <dt class="col-3">Sales</dt>
+                            <dt class="col-3">{{ __('product.sales') }}</dt>
                             <dd class="col-9">{{ $product->sales }}</dd>
                         </div>
                         <div class="my-2">
-                            <h5>Details</h5>
+                            <h5>{{ __('product.details') }}</h5>
                             <div>
                                 {!! $product->details !!}
                             </div>
@@ -60,9 +60,9 @@
 
                         <hr>
 
-                        <a href="#" class="btn btn-warning shadow-0"> Buy now </a>
-                        <a href="#" class="btn btn-danger shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
-                        <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
+                        <a href="#" class="btn btn-warning shadow-0"> {{ __('product.buy_now') }} </a>
+                        <a href="#" class="btn btn-danger shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> {{ __('product.add_to_cart') }} </a>
+                        <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> {{ __('product.save') }} </a>
                     </div>
                 </main>
             </div>
@@ -675,7 +675,7 @@
                     </div>
                     <div class="tab-pane fade active show" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
                         <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
-                            <h5 class="mb-0 mb-4">Ratings and Reviews</h5>
+                            <h5 class="mb-0 mb-4">{{ __('product.ratings_and_reviews') }}</h5>
                             <div class="graph-star-rating-header">
                                 <div class="star-rating">
                                     <!-- Display average star rating dynamically -->
@@ -709,13 +709,13 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="bg-white rounded shadow-sm p-4 mb-4 restaurant-detailed-ratings-and-reviews" id="review-area">
-                            <h5 class="mb-1">All Ratings and Reviews</h5>
+                        <div class="bg-white rounded shadow-sm mb-1 restaurant-detailed-ratings-and-reviews" id="review-area">
+                            <h5 class="mb-1">{{ __('product.all_ratings_and_reviews') }}</h5>
                             @foreach ($reviews as $review)
-                                @if($review->status == 0 && auth()->user()->type != 1)
+                                @if($review->status == 0 && !(auth()->user()->type == 1 || auth()->id() == $review->user_id))
                                     @continue
                                 @endif
-                                <div class="reviews-members pt-4 pb-4">
+                                <div class="reviews-members px-4 py-3 border rounded {{ $review->status == 0 && auth()->id() == $review->user_id && auth()->user()->type != 1 ? 'bg-hidden' : '' }}">
                                     <div class="media">
                                         <a href="#">
                                             <img alt="{{ $review->user->name }}" src="{{ asset('storage/' . $review->user->img) ?? 'http://bootdey.com/img/Content/avatar/avatar1.png' }}" class="mr-3 rounded-pill">
@@ -732,13 +732,6 @@
                                             </div>
                                             <div class="reviews-members-body">
                                                 <p class="comment-text">{{ $review->comment }}</p>
-                                                <form action="{{ route('review.update', $review->id) }}" method="POST" class="edit-comment-form d-none">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <textarea name="comment" class="form-control txt-trans-none">{{ $review->comment }}</textarea>
-                                                    <button type="submit" class="btn btn-danger btn-sm mb-3">Save</button>
-                                                    <button type="button" class="btn btn-secondary btn-sm mb-3 cancel-edit">Cancel</button>
-                                                </form>
                                             </div>
                                             <div class="reviews-members-footer d-flex justify-content-between">
                                                 <div>
@@ -754,6 +747,9 @@
                                                 </div>
                                                 @if(auth()->user() && (auth()->user()->type == 1 || $review->user->id == auth()->user()->id))
                                                     <div>
+                                                        @if($review->status == 0 && auth()->id() == $review->user_id && auth()->user()->type != 1)
+                                                            <span class="text-hidden">[Not visible]</span>
+                                                        @endif
                                                         @if(auth()->user()->type == 1)
 {{--                                                            <span onclick="checkVisibility()" class="text-black ml-3 cursor-pointer" style="font-size: 20px"><i class="fa fa-eye-slash"></i></span>--}}
                                                             <form id="hide-review-{{ $review->id }}" action="{{ route('review.update', $review->id) }}" method="POST" style="display: none;">
@@ -771,7 +767,7 @@
                                                             </span>
                                                         @endif
                                                         @if($review->user->id == auth()->user()->id)
-                                                            <span class="text-black ml-3 cursor-pointer edit-comment" style="font-size: 20px"><i class="fa fa-edit"></i></span>
+                                                            <span class="text-black ml-3 cursor-pointer edit-comment" onclick="window.location.href = '#leave-review-area';" style="font-size: 20px"><i class="fa fa-edit"></i></span>
                                                         @endif
                                                         <form id="delete-review-{{ $review->id }}" action="{{ route('review.destroy', $review) }}" method="POST" style="display: none;">
                                                             @csrf
@@ -793,40 +789,43 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (!$loop->last)
-                                    <hr>
-                                @endif
                             @endforeach
-                            <div class="d-flex justify-content-center mt-4">
-                                {{ $reviews->links('pagination::bootstrap-4') }}
-                            </div>
+
+                            @if($reviewCount > env('REVIEW_LIM'))
+                                <div class="d-flex justify-content-center mt-4">
+                                    {{ $reviews->links('pagination::bootstrap-4') }}
+                                </div>
+                            @endif
                         </div>
                         <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page" id="leave-review-area">
                             @if(Auth::check())
                                 <div>
-                                    <h5 class="mb-4">Leave Comment</h5>
-                                    <p class="mb-2">Rate the Product</p>
+                                    <h5 class="mb-4">{{ $crrUserRev ?  __('product.update_your_review') : __('product.leave_your_review') }}</h5>
+                                    <p class="mb-2"> {{ __('product.rate_the_product') }}</p>
 
-                                    <form id="reviewForm" action="{{ route('review.store') }}" method="post">
+
+                                    <form id="reviewForm" action="{{ $crrUserRev ? route('review.update', $crrUserRev->id) : route('review.store') }}" method="post">
                                         {{ csrf_field() }}
+                                        @if($crrUserRev)
+                                            @method('PUT')
+                                        @endif
                                         <div class="mb-4">
                                             <span class="star-rating">
-                                                <i class="fa-solid fa-star text-danger" data-value="1"></i>
-                                                <i class="fa-regular fa-star-o text-danger" data-value="2"></i>
-                                                <i class="fa-regular fa-star-o text-danger" data-value="3"></i>
-                                                <i class="fa-regular fa-star-o text-danger" data-value="4"></i>
-                                                <i class="fa-regular fa-star-o text-danger" data-value="5"></i>
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <i class="text-danger {{ $i <= ($crrUserRev->stars ?? 1) ? 'fa-solid fa-star' : 'fa-regular fa-star-o' }}" data-value="{{ $i }}"></i>
+                                                @endfor
                                             </span>
-                                            <input type="hidden" id="star_count" value="1">
-                                            <input type="hidden" id="product_id" value="{{ $product->id }}">
-                                            <input type="hidden" id="user_id" value="{{ auth()->user()->id }}">
+                                            <input type="hidden" id="star_count" name="stars" value="{{ $crrUserRev->stars ?? 1 }}">
+                                            <input type="hidden" id="product_id" name="product_id" value="{{ $product->id }}">
+                                            <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
+                                            <input type="hidden" name="preUrl" value="{{ url()->current().'#leave-review-area' }}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="comment">Your Comment</label>
-                                            <textarea class="form-control txt-trans-none" id="comment"></textarea>
+                                            <label for="comment">{{ __('product.your_comment') }}</label>
+                                            <textarea class="form-control txt-trans-none" id="comment" name="comment">{{ $crrUserRev->comment ?? '' }}</textarea>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-danger btn-sm" type="submit">Submit Review</button>
+                                            <button class="btn btn-danger btn-sm" type="submit">{{ __('product.submit_review') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -839,7 +838,7 @@
                         </div>
                         <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
                             <div class="social-share d-flex justify-content-between">
-                                <h3 class="text-center">Share this page</h3>
+                                <h3 class="text-center">{{ __('product.share_this_page') }}</h3>
                                 {!!
                                     Share::page(url()->current(), 'Check out this awesome content!')
                                         ->facebook()
@@ -869,7 +868,7 @@
 @section('script')
     <script>
 
-        // make review
+        // make/update review
         $(document).ready(function() {
             // Handle star clicking
             $('.star-rating i').on('click', function() {
@@ -884,50 +883,6 @@
                     $('.star-rating i[data-value="' + i + '"]').removeClass('fa-regular fa-star-o').addClass('fa-solid fa-star');
                 }
             });
-
-
-            // Handle form submission via AJAX
-            $('#reviewForm').on('submit', function (e){
-                e.preventDefault();
-
-                let formData = {
-                    _token: $('input[name="_token"]').val(),
-                    product_id: $('#product_id').val(),
-                    user_id: $('#user_id').val(),
-                    stars: $('#star_count').val(),
-                    comment: $('#comment').val()
-                };
-
-                $.ajax({
-                    url: $('#reviewForm').attr('action'),
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        // alert(' submitted successfully!');
-                        location.reload();
-                    },
-                    error: function(response) {
-                        console.log(response.responseText);
-                        alert('Failed to submit comment.');
-                    }
-                });
-            });
-        });
-    </script>
-
-    <script>
-        // Handle the click on the edit icon
-        $('.edit-comment').on('click', function() {
-            let $review = $(this).closest('.reviews-members');
-            $review.find('.comment-text').hide();
-            $review.find('.edit-comment-form').removeClass('d-none').show();
-        });
-
-        // Handle canceling the edit
-        $('.cancel-edit').on('click', function() {
-            var $review = $(this).closest('.reviews-members');
-            $review.find('.comment-text').show();
-            $review.find('.edit-comment-form').hide();
         });
     </script>
 

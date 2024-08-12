@@ -6,12 +6,15 @@ use App\Models\Category;
 use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller {
 
     public function showOne($id) {
+//        App::setLocale('bn');
+
         $product = Product::findOrFail($id);
 
         $allReviews = $product->reviews;
@@ -24,14 +27,16 @@ class ProductController extends Controller {
             $starDistribution[$i] = ($allReviews->where('stars', $i)->count() / $reviewCount) * 100;
         }
 
-        $reviews = $product->reviews()->orderBy('created_at', 'desc')->paginate(10);
+        $reviews = $product->reviews()->orderBy('created_at', 'desc')->paginate(env('REVIEW_LIM'));
+        $crrUserRev = Auth::check() ? $reviews->firstWhere('user_id', auth()->id()) : null;
 
         return view('frontend.product', [
             'product' => $product,
             'reviews' => $reviews,
             'reviewCount' => $reviewCount,
             'averageRating' => $averageRating,
-            'starDistribution' => $starDistribution
+            'starDistribution' => $starDistribution,
+            'crrUserRev' => $crrUserRev,
         ]);
     }
 

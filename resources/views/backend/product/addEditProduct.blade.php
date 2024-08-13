@@ -21,9 +21,16 @@
                                 <input type="hidden" name="id" value="{{$product->id}}">
                             @endif
 
-                            <label for="name">Name</label>
-                            <div class="mb-3">
-                                <input type="text" id="name" name="name" class="form-control" value="{{ isset($product) ? $product->name : "" }}" placeholder="Name" aria-label="Name" aria-describedby="name-addon" required>
+                            <div class="mb-3 row">
+                                <div class="col-md-6">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" name="name" class="form-control" value="{{ isset($product) ? $product->name : "" }}" placeholder="Name" aria-label="Name" aria-describedby="name-addon" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="brand">Brand</label>
+                                    <input type="text" id="brand" name="brand" class="form-control" value="{{ isset($product) ? $product->brand : "" }}" placeholder="Brand" aria-label="Brand" aria-describedby="name-addon" required>
+                                </div>
                             </div>
 
                             <label for="details">Details</label>
@@ -31,14 +38,16 @@
                                 <textarea id="mytextarea" name="details" class="form-control" placeholder="Details" aria-label="Details" aria-describedby="details-addon" rows="4">{{ isset($product) ? $product->details : "" }}</textarea>
                             </div>
 
-                            <label for="brand">Brand</label>
-                            <div class="mb-3">
-                                <input type="text" id="brand" name="brand" class="form-control" value="{{ isset($product) ? $product->brand : "" }}" placeholder="Brand" aria-label="Brand" aria-describedby="name-addon" required>
-                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-md-6">
+                                    <label for="price">Price</label>
+                                    <input type="number" step="0.01" id="price" name="price" class="form-control" value="{{ isset($product) ? $product->price : "" }}" placeholder="Price" aria-label="Price" aria-describedby="price-addon" required>
+                                </div>
 
-                            <label for="price">Price</label>
-                            <div class="mb-3">
-                                <input type="number" id="price" name="price" class="form-control" value="{{ isset($product) ? $product->price : "" }}" placeholder="Price" aria-label="Price" aria-describedby="price-addon" required>
+                                <div class="col-md-6">
+                                    <label for="brand">Offer</label>
+                                    <input type="number" step="0.01" id="dis-rate" name="dis_rate" class="form-control" value="{{ isset($product) ? $product->dis_rate : "" }}" placeholder="Set discount rate" aria-label="Offer" aria-describedby="dis_rate-addon" required>
+                                </div>
                             </div>
 
                             <label for="category">Category</label>

@@ -17,7 +17,6 @@ class Product extends Model
         'details',
         'price',
         'brand',
-        'img',
         'dis_rate'
     ];
 

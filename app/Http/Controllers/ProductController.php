@@ -23,9 +23,10 @@ class ProductController extends Controller {
         $averageRating = $allReviews->avg('stars');
 
         $starDistribution = [];
-        for ($i = 5; $i > 0; $i--) {
-            $starDistribution[$i] = ($allReviews->where('stars', $i)->count() / $reviewCount) * 100;
-        }
+        if ($reviewCount > 0)
+            for ($i = 5; $i > 0; $i--) {
+                $starDistribution[$i] = ($allReviews->where('stars', $i)->count() / $reviewCount) * 100;
+            }
 
         $reviews = $product->reviews()->orderBy('created_at', 'desc')->paginate(env('REVIEW_LIM'));
         $crrUserRev = Auth::check() ? $reviews->firstWhere('user_id', auth()->id()) : null;
@@ -77,11 +78,7 @@ class ProductController extends Controller {
             }
 
             $product = new Product();
-            $product->name = $request->input('name');
-            $product->details = $request->input('details');
-            $product->category_id = $request->input('category_id'); // Save category_id
-            $product->price = $request->input('price');
-            $product->brand = $request->input('brand');
+            $product->fill($request->all());
             $product->img = $imagePath;
             $product->user_id = Auth::id();
 
@@ -130,11 +127,7 @@ class ProductController extends Controller {
             }
 
             // Update product fields
-            $product->name = $request->input('name');
-            $product->details = $request->input('details');
-            $product->category_id = $request->input('category_id'); // Update category_id
-            $product->price = $request->input('price');
-            $product->brand = $request->input('brand');
+            $product->fill($request->all());
             $product->user_id = Auth::id(); // Update the user_id if needed
 
             $product->save();

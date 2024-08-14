@@ -31,12 +31,13 @@ const app = new Vue({
                 });
         },
         deleteCat(id) {
+            let _this = this;
             if (confirm('Are you sure to delete this category?'))
                 axios.post(`${baseUrl}/api/category/${id}/delete`)
                     .then(response => {
                         if (response.data.success) {
                             alert(response.data.message);
-                            window.location.reload();
+                            _this.fetchCategories();
                         }
                     })
                     .catch(error => {

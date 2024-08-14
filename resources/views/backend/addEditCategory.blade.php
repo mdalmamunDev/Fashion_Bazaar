@@ -2,15 +2,21 @@
 @extends('backend.layouts.master')
 
 @section('title', isset($category) ? 'Edit Category' : 'Add Category')
+@section('head')
+    <script src="{{ asset('plugins/vue/v2.6.14.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="page-header min-vh-75">
-        <div class="container">
+        <div class="container" id="app">
             <div class="row">
                 <div class="col-xl-6 col-lg-5 col-md-6 d-flex flex-column mx-auto">
                     <div class="card card-plain">
                         <div class="card-header pb-0 text-left bg-transparent">
                             <h3 class="font-weight-bolder text-info text-gradient">{{isset($category) ? 'Edit Category' : 'Add Category'}}</h3>
+                            <h2>@{{ message }}</h2>
                             <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                            <button v-on:click="greet">Greet</button>
                         </div>
                         <div class="card-body">
                             <form role="form" method="POST" action="{{isset($category) ? route('cat.update') : route('cat.store')}}" enctype="multipart/form-data">
@@ -58,4 +64,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('backend/assets/js/vue/addEditCatVue.js') }}"></script>
 @endsection

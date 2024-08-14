@@ -21,6 +21,7 @@
     <title>
         @yield('title') - FashionBazaar
     </title>
+    <script>window.baseUrl = '{{url('/')}}'</script>
     @include('backend.layouts.links.upperLinks')
     @yield('head')
 </head>

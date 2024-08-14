@@ -11,8 +11,7 @@ class CategoriesControler extends Controller
 {
 
     public function index(){
-        $data['categories'] = Category::all();
-        return view('backend.categoryList', $data);
+        return view('backend.categoryList');
     }
 
     public function create(){
@@ -20,21 +19,24 @@ class CategoriesControler extends Controller
     }
 
     public function store(Request $request) {
+        try {
+            $this->validate($request, [
+                'category_name' => 'required|max:255',
+                'details' => 'sometimes',
+            ]);
 
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'details' => 'sometimes',
-        ]);
+            $category = new Category();
+            $category->fill($request->all());
+            $category->save();
 
-        $category = new Category();
-        $category->category_name =  $request->input('name');
-        $category->details = $request->input('details');
-        $category->status = $request->input('available') == 'yes' ? 1 : 0;
-        $category->save();
-
-        Toastr::success('New category inserted', 'Successfully Inserted!', ["positionClass" => "toast-top-center"]);
-        return redirect()->route('cat.list');
-
+            return response()->json(['success' => true, 'message' => 'Category created successfully.']);
+        }catch (\Exception $exception){
+            return response()->json([
+                'data' => $exception->getMessage(),
+                'status' => 5000,
+                'message' => 'Something Wrong'
+            ]);
+        }
     }
 
     public function edit($id)
@@ -44,42 +46,81 @@ class CategoriesControler extends Controller
         return view('backend.addEditCategory', $data);
     }
 
-    public function update(Request $request) {
-        $id = request()->input('id');
+    public function update(Request $request, $id) {
+        try {
+            $this->validate($request, [
+                'category_name' => 'required|max:255',
+                'details' => 'sometimes',
+            ]);
 
-        $this->validate($request, [
-            'id' => 'required',
-            'name' => 'required|max:255',
-            'details' => 'sometimes',
-        ]);
-
-        $category = Category::where('id', $id)->first();
-
-        if ($category){
-            $category->category_name =  $request->input('name');
-            $category->details = $request->input('details');
-            $category->status = $request->input('available') == 'yes' ? 1 : 0;
+            $category = Category::findOrFail($id);
+            $category->fill($request->all());
             $category->update();
 
-            Toastr::success('The category has been updated', 'Successfully Updated!', ["positionClass" => "toast-top-center"]);
-            return redirect()->route('cat.list');
+            return response()->json(['success' => true, 'message' => 'Category updated successfully.']);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'data' => $exception->getMessage(),
+                'status' => 5000,
+                'message' => 'Something went wrong'
+            ]);
         }
-
-        Toastr::error('The category is not found', 'Not Found!', ["positionClass" => "toast-top-center"]);
-        return redirect()->back();
     }
 
     public function delete($id) {
-        $category = Category::where('id', $id)->first();
+        try {
+            $category = Category::where('id', $id)->first();
 
-        if ($category){
-            $category->delete();
+            if ($category){
+                $category->delete();
 
-            Toastr::success('The category has been deleted', 'Successfully Deleted!', ["positionClass" => "toast-top-center"]);
-            return redirect()->back();
+                return response()->json(['success' => true, 'message' => 'Category deleted successfully.']);
+            }
+
+            return response()->json(['success' => false, 'message' => 'Category not found.']);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'data' => $exception->getMessage(),
+                'status' => 5000,
+                'message' => 'Something went wrong'
+            ]);
         }
+    }
 
-        Toastr::error('The category is not found', 'Not Found!', ["positionClass" => "toast-top-center"]);
-        return redirect()->back();
+
+
+    public function getCategory($id) {
+        try {
+            $data = Category::where('id', $id)->first();
+
+            $retData = [];
+
+            $retData['status'] = 200;
+            $retData['result'] = $data;
+            $retData['message'] = 'Successfully category fetched!';
+
+            return response()->json($retData);
+        }catch (\Exception $exception){
+            return response()->json([
+                'data' => $exception->getMessage(),
+                'status' => 5000,
+                'message' => 'Something Wrong'
+            ]);
+        }
+    }
+
+    public function getAll(){
+        try {
+
+            $categories = Category::all();
+
+            return response()->json(['success' => true, 'message' => 'Category created successfully.', 'result' => $categories]);
+        }catch (\Exception $exception){
+            return response()->json([
+                'data' => $exception->getMessage(),
+                'status' => 5000,
+                'message' => 'Something Wrong'
+            ]);
+        }
     }
 }

@@ -2,6 +2,11 @@
 
 
 @section('title', 'Categories')
+@section('head')
+    <script src="{{ asset('plugins/vue/v2.6.14.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -18,4 +23,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('backend/assets/js/vue/categoryListVue.js') }}"></script>
 @endsection

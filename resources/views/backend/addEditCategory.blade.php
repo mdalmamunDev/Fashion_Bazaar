@@ -4,6 +4,10 @@
 @section('title', isset($category) ? 'Edit Category' : 'Add Category')
 @section('head')
     <script src="{{ asset('plugins/vue/v2.6.14.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        window.catId = "{{ isset($category) ? $category->id : null }}";
+    </script>
 @endsection
 
 @section('content')
@@ -14,37 +18,33 @@
                     <div class="card card-plain">
                         <div class="card-header pb-0 text-left bg-transparent">
                             <h3 class="font-weight-bolder text-info text-gradient">{{isset($category) ? 'Edit Category' : 'Add Category'}}</h3>
-                            <h2>@{{ message }}</h2>
                             <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                            <button v-on:click="greet">Greet</button>
                         </div>
                         <div class="card-body">
-                            <form role="form" method="POST" action="{{isset($category) ? route('cat.update') : route('cat.store')}}" enctype="multipart/form-data">
+                            <form role="form" @submit.prevent="handleSubmit" enctype="multipart/form-data">
                                 {{csrf_field()}}
 
-                                @if(isset($category))
-                                <input type="hidden" name="id" value="{{$category->id}}">
-                                @endif
+                                <input type="hidden" name="id" v-model="form.id">
 
                                 <label for="name">Name</label>
                                 <div class="mb-3">
-                                    <input type="text" id="name" name="name" class="form-control" value="{{isset($category) ? $category->category_name : ""}}" placeholder="Name" aria-label="Name" aria-describedby="name-addon" required>
+                                    <input type="text" id="name" v-model="form.category_name" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-addon" required>
                                 </div>
 
                                 <label for="details">Details</label>
                                 <div class="mb-3">
-                                    <textarea id="details" name="details" class="form-control" placeholder="Details" aria-label="Details" aria-describedby="details-addon" rows="4" required>{{ isset($category) ? $category->details : '' }}</textarea>
+                                    <textarea id="details" v-model="form.details" class="form-control" placeholder="Details" aria-label="Details" aria-describedby="details-addon" rows="4" required></textarea>
                                 </div>
 
 
                                 <label for="available">Available?</label>
                                 <div class="mb-3">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="available" id="available_yes" value="yes" {{!isset($category) || $category->status == 1 ? 'checked' : ''}}>
+                                        <input class="form-check-input" type="radio" name="available" id="available_yes" value="1" v-model="form.status">
                                         <label class="form-check-label" for="available_yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="available" id="available_no" value="no" {{isset($category) && $category->status == 0 ? 'checked' : ''}}>
+                                        <input class="form-check-input" type="radio" name="available" id="available_no" value="0" v-model="form.status">
                                         <label class="form-check-label" for="available_no">No</label>
                                     </div>
                                 </div>

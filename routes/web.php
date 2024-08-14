@@ -57,10 +57,10 @@ Route::middleware(['auth.check'])->prefix('/admin')->group(function () {
     Route::prefix('/category')->group(function () {
         Route::get('/list', [CategoriesControler::class, 'index'])->name('cat.list');
         Route::get('/add', [CategoriesControler::class, 'create'])->name('cat.add');
-        Route::post('/add', [CategoriesControler::class, 'store'])->name('cat.store');
+//        Route::post('/add', [CategoriesControler::class, 'store'])->name('cat.store');
         Route::get('/edit/{id}', [CategoriesControler::class, 'edit'])->name('cat.edit');
-        Route::post('/update', [CategoriesControler::class, 'update'])->name('cat.update');
-        Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('cat.delete');
+//        Route::post('/update', [CategoriesControler::class, 'update'])->name('cat.update');
+//        Route::get('/delete/{id}', [CategoriesControler::class, 'delete'])->name('cat.delete');
     });
     Route::prefix('/user')->group(function () {
         Route::get('/list', [UserController::class, 'showList'])->name('user.list');

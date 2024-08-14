@@ -1,6 +1,7 @@
 {{--        required: $categories         --}}
 
 
+{{--{{ $categories }}--}}
 <section class="layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
@@ -13,7 +14,11 @@
                 <a href="{{ route('cat.pros', $cat->id) }}" class="col-md-4 mb-4 cat-box">
                     <div class="d-flex align-items-center p-2 bg-danger bg-gradient rounded">
                         <div class="box-md box-bg-red-light p-1 rounded">
-                            <img src="{{ asset('storage/' . $cat->products[0]->img) }}" class="img-cover" alt="Category Image">
+                            @if($cat->products->isNotEmpty())
+                                <img src="{{ asset('storage/' . $cat->products->first()->img) }}" class="img-cover" alt="Category Image">
+                            @else
+                                <img src="{{ asset('backend/assets/img/defaults/category.png') }}" class="img-cover" alt="Default Category Image">
+                            @endif
                         </div>
                         <div class="ml-1 text-white">
                             <h6 class="mb-1">#{{ $cat->category_name }}</h6>

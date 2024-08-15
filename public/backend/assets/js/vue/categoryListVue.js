@@ -26,8 +26,7 @@ const app = new Vue({
                     }
                 })
                 .catch(error => {
-                    console.error(error);
-                    alert('Failed to delete the category.');
+                    toastr.error(error.message, 'Failed To Fetch Category!', {positionClass: 'toast-top-center'});
                 });
         },
         deleteCat(id) {
@@ -36,13 +35,12 @@ const app = new Vue({
                 axios.post(`${baseUrl}/api/category/${id}/delete`)
                     .then(response => {
                         if (response.data.success) {
-                            alert(response.data.message);
+                            toastr.success(response.data.message, 'Category Deleted!', {positionClass: 'toast-top-center'});
                             _this.fetchCategories();
                         }
                     })
                     .catch(error => {
-                        console.error(error);
-                        alert('Failed to delete the category.');
+                        toastr.error(error.message, 'Failed To Delete Category!', {positionClass: 'toast-top-center'});
                     });
         }
     }

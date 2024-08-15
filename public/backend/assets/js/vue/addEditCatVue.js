@@ -53,28 +53,36 @@ const app = new Vue({
         store() {
             axios.post(`${baseUrl}/api/category/store`, this.form)
                 .then(response => {
-                    if (response.data.success)
-                        alert(response.data.message)
+                    if (response.data.success) {
+                        toastr.success(response.data.message, 'Category Saved!', {
+                            positionClass: 'toast-top-center', // Set position
+                            timeOut: 3000 // Adjust timeout
+                        });
 
-                    // Redirect back to the previous page
-                    window.location.href = document.referrer;
+                        setTimeout(() => {window.location.href = document.referrer;}, 3010)
+
+                    } else {
+                        toastr.error('Failed to store the category.');
+                    }
                 })
                 .catch(error => {
-                    console.error(error);
-                    // Handle error (e.g., display an error message)
+                    toastr.error(error.message, 'Failed To Save Category!', {positionClass: 'toast-top-center'});
                 });
         },
         update() {
             axios.post(`${baseUrl}/api/category/${catId}/update`, this.form)
                 .then(response => {
                     if (response.data.success) {
-                        alert(response.data.message);
-                        window.location.href = document.referrer; // Redirect to a specific route
+                        toastr.success(response.data.message, 'Category Updated!', {
+                            positionClass: 'toast-top-center', // Set position
+                            timeOut: 3000 // Adjust timeout
+                        });
+
+                        setTimeout(() => {window.location.href = document.referrer;}, 3010)
                     }
                 })
                 .catch(error => {
-                    console.error(error);
-                    alert('Failed to update the category.');
+                    toastr.error(error.message, 'Failed To Update Category!', {positionClass: 'toast-top-center'});
                 });
         }
     }

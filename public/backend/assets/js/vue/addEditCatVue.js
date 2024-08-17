@@ -8,6 +8,7 @@ const app = new Vue({
             details: '',
             status: 1,
         },
+        loading: false,
     },
     props : {
 
@@ -28,6 +29,9 @@ const app = new Vue({
             this.message = 'Hello, Md Al Mamun!';
         },
         handleSubmit() {
+            if (this.loading) return; // Prevent multiple submissions
+            this.loading = true; // Set loading to true to disable the button
+
             if (catId) {
                 this.update()
             } else
@@ -37,55 +41,37 @@ const app = new Vue({
 
         fetchCategory() {
             let _this = this;
-            axios.get(`${baseUrl}/api/category/${catId}/get`)  // the basedUrl is assigned on master lay
-                .then(response => {
-                    // this.data = response.data;  // Store the response data
-                    let cat = response.data.result;
-                    console.log(cat);
-                    _this.form.category_name = cat.category_name;
-                    _this.form.details = cat.details;
-                    _this.form.status = cat.status;
-                })
-                .catch(error => {
-                    this.error = error.message;  // Handle any errors
-                });
+            httpReq({
+                url:`${baseUrl}/api/category/${catId}/get`,
+                callback: (response) => {
+                    const { category_name, details, status } = response.data.result;
+                    _this.form = { category_name, details, status };
+                }
+            });
         },
         store() {
-            axios.post(`${baseUrl}/api/category/store`, this.form)
-                .then(response => {
-                    if (response.data.success) {
-                        toastr.success(response.data.message, 'Category Saved!', {
-                            positionClass: 'toast-top-center', // Set position
-                            timeOut: 3000 // Adjust timeout
-                        });
-
-                        setTimeout(() => {window.location.href = document.referrer;}, 3010)
-
-                    } else {
+            httpReq({
+                url: `${baseUrl}/api/category/store`,
+                method: 'post',
+                data: this.form,
+                callback: (response) => {
+                    if (response.data.success)
+                        toastSuccAndRedir('Category Saved!', response.data.message);
+                    else
                         toastr.error('Failed to store the category.');
-                    }
-                })
-                .catch(error => {
-                    toastr.error(error.message, 'Failed To Save Category!', {positionClass: 'toast-top-center'});
-                });
+                }
+            });
         },
         update() {
-            axios.post(`${baseUrl}/api/category/${catId}/update`, this.form)
-                .then(response => {
-                    if (response.data.success) {
-                        toastr.success(response.data.message, 'Category Updated!', {
-                            positionClass: 'toast-top-center', // Set position
-                            timeOut: 3000 // Adjust timeout
-                        });
-
-                        setTimeout(() => {window.location.href = document.referrer;}, 3010)
-                    }
-                })
-                .catch(error => {
-                    toastr.error(error.message, 'Failed To Update Category!', {positionClass: 'toast-top-center'});
-                });
+            httpReq({
+                url: `${baseUrl}/api/category/${catId}/update`,
+                method: 'post',
+                data: this.form,
+                callback: (response) => {
+                    if (response.data.success)
+                        toastSuccAndRedir('Category Updated!', response.data.message);
+                }
+            });
         }
     }
 });
-
-console.log(app);

@@ -3,8 +3,6 @@
 
 @section('title', isset($category) ? 'Edit Category' : 'Add Category')
 @section('head')
-    <script src="{{ asset('plugins/vue/v2.6.14.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         window.catId = "{{ isset($category) ? $category->id : null }}";
     </script>

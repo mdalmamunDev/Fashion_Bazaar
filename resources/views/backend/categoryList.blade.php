@@ -2,10 +2,6 @@
 
 
 @section('title', 'Categories')
-@section('head')
-    <script src="{{ asset('plugins/vue/v2.6.14.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-@endsection
 
 @section('content')
     <div class="row">

@@ -31,8 +31,9 @@ class FrontendController extends Controller
 
         $data['categories'] = Category::where('status', '!=', 0)->get();
 
-        $data['testimonials'] = Testimonial::take(10)
-            ->orderBy('likes', 'desc')
+        $data['testimonials'] = Testimonial::withCount('likes')
+            ->orderBy('likes_count', 'desc')
+            ->take(10)
             ->get();
 
         return view('frontend.home', $data);

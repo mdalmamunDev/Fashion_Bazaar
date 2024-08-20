@@ -19,3 +19,7 @@ Route::get('category/{id}/get', [\App\Http\Controllers\CategoriesControler::clas
 Route::post('category/store', [\App\Http\Controllers\CategoriesControler::class, 'store']);
 Route::post('category/{id}/update', [\App\Http\Controllers\CategoriesControler::class, 'update']);
 Route::post('category/{id}/delete', [\App\Http\Controllers\CategoriesControler::class, 'delete']);
+
+
+Route::resource('testimonial', \App\Http\Controllers\TestimonialController::class);
+Route::post('testimonial/do-like/{testId}/{userId}', [\App\Http\Controllers\TestimonialController::class, 'doLike']);

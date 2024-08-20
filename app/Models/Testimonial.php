@@ -19,6 +19,11 @@ class Testimonial extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function likes()
+    {
+        return $this->hasMany(TestimonialLike::class);
+    }
+
 
     /**
      * Get the relative time when the product was created.

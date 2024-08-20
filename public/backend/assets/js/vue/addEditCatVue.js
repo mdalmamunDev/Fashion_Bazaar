@@ -3,9 +3,6 @@ const app = new Vue({
     data: {
         message: 'Hello, Vue 2!',
         form: {
-            // id: '{{ isset($category) ? $category->id : "" }}',
-            category_name: '',
-            details: '',
             status: 1,
         },
         loading: false,

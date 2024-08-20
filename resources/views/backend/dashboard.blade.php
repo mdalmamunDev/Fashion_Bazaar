@@ -94,42 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-4">
-            <div class="container card mb-4">
-                <div class="card-header pb-0 d-flex justify-content-between">
-                    <h6>User testimonials</h6>
-                    <a href="{{ route('admin.pro.list') }}" type="button" class="btn btn-primary">All Testimonials</a>
-                </div>
-                <div class="row">
-                    @foreach($testimonials as $test)
-                        <div class="col-6">
-                            <div class="box-bg-red-light rounded m-2 p-2 w-100">
-                                <div class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
-                                    <div class="avatar me-3">
-                                        <img src="{{ asset('storage/' . $test->user->img) }}" alt="kal" class="border-radius-lg shadow img-cover">
-                                    </div>
-                                    <div class="d-flex align-items-start flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">{{ $test->user->name }}</h6>
-                                        <p class="mb-0 text-xs">{{ $test->user->type_str }}</p>
-                                    </div>
-                                </div>
-                                <div class="m-2 ms-4">
-                                    <p>{{ $test->content }}</p>
-                                </div>
-                                <div class="font-weight-bold">
-                                <span>
-                                    <i class="fa fa-heart-o  cursor-pointer"></i> {{ $test->likes }}
-                                </span>
-                                    <span class="ms-2">
-                                    <i class="fa fa-reply"></i>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+        @include('backend.layouts.dashboard.testimonialsDashboard')
         <div class="row mt-4">
             <div class="col-lg-7 mb-lg-0 mb-4">
                 <div class="card">
@@ -676,4 +641,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('backend/assets/js/vue/dashboardVue.js') }}"></script>
 @endsection

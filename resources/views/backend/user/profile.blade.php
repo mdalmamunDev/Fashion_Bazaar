@@ -263,9 +263,10 @@
                                                             {{ $pro->name }}
                                                         </h5>
                                                     </a>
-                                                    <p class="mb-4 text-sm">
-                                                        {{ $pro->details }}
-                                                    </p>
+                                                    <div class="mb-4 text-sm">
+                                                        {!! truncateHtml($pro->details, 150) !!}
+{{--                                                        {{ $pro->details }}--}}
+                                                    </div>
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <a href="{{ route('pro.show', $pro->id) }}" target="_blank" class="btn btn-outline-primary btn-sm mb-0">View Product</a>
                                                         <div class="avatar-group mt-2">

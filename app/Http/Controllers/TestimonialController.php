@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Testimonial;
+use App\Models\TestimonialLike;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TestimonialController extends Controller
 {
@@ -15,7 +17,18 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        //
+        try {
+
+            $tests = Testimonial::with('user', 'likes')->get();
+
+            return response()->json(['success' => true, 'message' => 'All testimonials are fetched.', 'result' => $tests]);
+        }catch (\Exception $exception){
+            return response()->json([
+                'data' => $exception->getMessage(),
+                'status' => 5000,
+                'message' => 'Something Wrong'
+            ]);
+        }
     }
 
     /**
@@ -95,5 +108,36 @@ class TestimonialController extends Controller
         $testimonial->delete();
 
         return redirect()->back()->with('success', 'Testimonial deleted successfully.');
+    }
+
+
+    public function doLike($testId, $userId) {
+        try {
+            $likeExists = TestimonialLike::where('testimonial_id', $testId)
+                ->where('user_id', $userId)
+                ->first();
+
+            if (!$likeExists) {
+                // If the like doesn't exist, create a new like
+                TestimonialLike::create([
+                    'testimonial_id' => $testId,
+                    'user_id' => $userId
+                ]);
+            } else {
+                // If the like exists, remove it (unlike)
+                $likeExists->delete();
+            }
+
+            // Get the updated like count
+            $likes = TestimonialLike::where('testimonial_id', $testId)->get();
+
+            return response()->json(['success' => true, 'message' => ($likeExists ? 'unlike' : 'like') . ' this testimonial', 'result' => $likes, 'isLiked' => !$likeExists]);
+        }catch (\Exception $exception){
+            return response()->json([
+                'data' => $exception->getMessage(),
+                'status' => 5000,
+                'message' => 'Something Wrong'
+            ]);
+        }
     }
 }

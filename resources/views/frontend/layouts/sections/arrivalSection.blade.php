@@ -21,7 +21,7 @@
                                 </div>
                                 <div>
                                     <a href="{{ route('pro.show', $pro->id) }}" class="border-0 text-dark m-0 p-0 font-weight-bold pe-auto" style="background: none; font-size: 20px; cursor: pointer">{{ $pro->name }}</a>
-                                    <div class="mb-1" style="font-size: 14px">{!! truncateHtml($pro->details, 150) !!}</div>
+                                    <div class="mb-1" style="font-size: 14px">{!! truncateHtml($pro->details, 100) !!}</div>
                                     <p class="font-weight-light" style="font-size: 12px">{{ $pro->relative_time }}</p>
                                 </div>
                             </div>

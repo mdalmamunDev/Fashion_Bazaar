@@ -22,3 +22,11 @@ function toastSuccAndRedir(title, msg, delay = 1400, position = 'toast-top-cente
     if (redirectTo)
         setTimeout(() => { window.location.href = redirectTo}, delay ? delay + 600 : 0)
 }
+
+function userTypeStr(type) {
+    if (type === 1) return 'Super Admin';
+    if (type === 2) return 'Admin';
+    if (type === 3) return 'Customer';
+
+    return '';
+}

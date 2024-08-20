@@ -32,6 +32,7 @@
                         @else
                             @component('frontend.layouts.noLoginAlert')
                                 @slot('motive', 'contact')
+                                @slot('preUrl', url()->current())
                             @endcomponent
                         @endif
                     </div>

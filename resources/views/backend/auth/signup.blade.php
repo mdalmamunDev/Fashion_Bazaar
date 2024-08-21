@@ -28,7 +28,9 @@
                                 <form role="form" action="{{ route('doSignup') }}" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
 
-                                    <input type="hidden" name="preUrl" value="{{ $preUrl }}">
+                                    @if(isset($preUrl))
+                                            <input type="hidden" name="preUrl" value="{{ $preUrl }}">
+                                    @endif
 
                                     <label for="name">Name</label>
                                     <div class="mb-3">

@@ -22,5 +22,5 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('backend/assets/js/vue/categoryListVue.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/vue/categoryTableVue.js') }}"></script>
 @endsection

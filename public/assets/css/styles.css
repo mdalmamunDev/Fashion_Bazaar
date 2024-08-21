@@ -19,6 +19,14 @@
 .box-bg-red {
     background-color: #ffb2b2
 }
+.glass-bg {
+    background: rgba(255, 255, 255, 0.2); /* White background with transparency */
+    backdrop-filter: blur(10px); /* Blur effect */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Optional: Light border */
+}
+
 .bg-hidden {
     background-color: #d2d2d2;
 }

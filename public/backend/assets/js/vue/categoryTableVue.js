@@ -1,5 +1,5 @@
-const app = new Vue({
-    el: '#app',
+const categoryTableApp = new Vue({
+    el: '#categoryTableArea',
     data: {
         categories: [],
     },
@@ -42,5 +42,3 @@ const app = new Vue({
         }
     }
 });
-
-console.log(app);

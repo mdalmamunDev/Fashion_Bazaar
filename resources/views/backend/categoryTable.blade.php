@@ -13,7 +13,7 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody id="app">
+            <tbody id="categoryTableArea">
                 <tr v-for="(category, key) in categories" :key="category.id">
                     <td>
                         <div class="ms-3">

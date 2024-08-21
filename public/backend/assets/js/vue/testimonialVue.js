@@ -1,4 +1,4 @@
-const app = new Vue({
+const testimonialApp = new Vue({
     el: '#testimonialArea',
     data: {
         message: 'Hi this is me',

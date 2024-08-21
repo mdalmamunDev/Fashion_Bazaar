@@ -21,7 +21,7 @@
                         </div>
                     </td>
                     <td>
-                        <p class="text-sm font-weight-bold mb-0">@{{ category.category_name }}</p>
+                        <a :href="`{{ route('cat.pros','') }}/${category.id}`" target="_blank" class="text-sm font-weight-bold mb-0">@{{ category.category_name }}</a>
                     </td>
                     <td>
                         <span class="text-xs font-weight-bold">@{{ category.details }}</span>

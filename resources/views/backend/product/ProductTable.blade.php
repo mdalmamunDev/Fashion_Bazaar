@@ -25,7 +25,7 @@
                         <a href="{{ route('pro.show', $value->id) }}" class="text-sm font-weight-bold mb-0" target="_blank">{{$value->name}}</a>
                     </td>
                     <td>
-                        <span class="text-xs font-weight-bold">{{ $value->category ? $value->category->category_name : ''}}</span>
+                        <a href="{{ route('cat.pros', $value->category->id) }}" class="text-xs font-weight-bold" target="_blank">{{ $value->category ? $value->category->category_name : ''}}</a>
                     </td>
                     <td class="align-middle text-center">
                         @if($value->user)

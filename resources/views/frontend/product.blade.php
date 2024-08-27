@@ -117,84 +117,85 @@
                                 <h6 class="text-danger text-center py-5">No review yet!</h6>
                             @else
                                 @foreach ($reviews as $review)
-                                @if($review->status == 0 && !(auth()->user()->type == 1 || auth()->id() == $review->user_id))
-                                    @continue
-                                @endif
-                                <div class="reviews-members px-4 py-3 border rounded {{ $review->status == 0 && auth()->id() == $review->user_id && auth()->user()->type != 1 ? 'bg-hidden' : '' }}">
-                                    <div class="media">
-                                        <a href="#">
-                                            <img alt="{{ $review->user->name }}" src="{{ asset('storage/' . $review->user->img) ?? 'http://bootdey.com/img/Content/avatar/avatar1.png' }}" class="mr-3 rounded-pill">
-                                        </a>
-                                        <div class="media-body">
-                                            <div class="reviews-members-header">
-                                                <span class="star-rating float-right">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        <i class="text-danger {{ $i <= $review->stars ? 'fa-solid fa-star' : 'fa-regular fa-star-o' }}"></i>
-                                                    @endfor
-                                                </span>
-                                                <h6 class="mb-1"><a class="text-black" href="#">{{ $review->user->name }}</a></h6>
-                                                <p class="text-gray">{{ $review->relative_time }}</p>
-                                            </div>
-                                            <div class="reviews-members-body">
-                                                <p class="comment-text">{{ $review->comment }}</p>
-                                            </div>
-                                            <div class="reviews-members-footer d-flex justify-content-between">
-                                                <div>
-                                                    <a class="text-black" style="font-size: 20px" onclick="doLike({{ $review->id }}, {{ auth()->check() ? auth()->user()->id : null}})">
-                                                        <i class="{{ (auth()->check() && $review->likes->contains('user_id', auth()->id())) ? 'fa-solid' : 'fa-regular' }} fa-thumbs-up" id="like-icon-{{ $review->id }}"></i>
-                                                    </a>
-                                                    <span id="like-count-{{ $review->id }}">{{ count($review->likes) }}</span>
-                                                    <span class="total-like-user-main ml-2" dir="rtl">
-                                                        @foreach($review->likes->take(3) as $like)
-                                                            <a data-toggle="tooltip" data-placement="top" title="{{ $like->user->name }}" href="#"><img alt="User" src="{{ $like->user->img? asset('storage/' . $like->user->img) : 'http://bootdey.com/img/Content/avatar/avatar2.png' }}" class="total-like-user rounded-pill"></a>
-                                                        @endforeach
+                                    @if($review->status == 0 && !(auth()->user()->type == 1 || auth()->id() == $review->user_id))
+                                        {{--    hidden review   --}}
+                                        @continue
+                                    @endif
+                                    <div class="reviews-members px-4 py-3 border rounded {{ $review->status == 0 && auth()->id() == $review->user_id && auth()->user()->type != 1 ? 'bg-hidden' : '' }}">
+                                        <div class="media">
+                                            <a href="#">
+                                                <img alt="{{ $review->user->name }}" src="{{ asset('storage/' . $review->user->img) ?? 'http://bootdey.com/img/Content/avatar/avatar1.png' }}" class="mr-3 rounded-pill">
+                                            </a>
+                                            <div class="media-body">
+                                                <div class="reviews-members-header">
+                                                    <span class="star-rating float-right">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            <i class="text-danger {{ $i <= $review->stars ? 'fa-solid fa-star' : 'fa-regular fa-star-o' }}"></i>
+                                                        @endfor
                                                     </span>
+                                                    <h6 class="mb-1"><a class="text-black" href="{{ route('profile', $review->user->id) }}">{{ $review->user->name }}</a></h6>
+                                                    <p class="text-gray">{{ $review->relative_time }}</p>
                                                 </div>
-                                                @if(auth()->user() && (auth()->user()->type == 1 || $review->user->id == auth()->user()->id))
+                                                <div class="reviews-members-body">
+                                                    <p class="comment-text">{{ $review->comment }}</p>
+                                                </div>
+                                                <div class="reviews-members-footer d-flex justify-content-between">
                                                     <div>
-                                                        @if($review->status == 0 && auth()->id() == $review->user_id && auth()->user()->type != 1)
-                                                            <span class="text-hidden">[Not visible]</span>
-                                                        @endif
-                                                        @if(auth()->user()->type == 1)
-{{--                                                            <span onclick="checkVisibility()" class="text-black ml-3 cursor-pointer" style="font-size: 20px"><i class="fa fa-eye-slash"></i></span>--}}
-                                                            <form id="hide-review-{{ $review->id }}" action="{{ route('review.update', $review->id) }}" method="POST" style="display: none;">
+                                                        <a class="text-black" style="font-size: 20px" onclick="doLike({{ $review->id }}, {{ auth()->check() ? auth()->user()->id : null}})">
+                                                            <i class="{{ (auth()->check() && $review->likes->contains('user_id', auth()->id())) ? 'fa-solid' : 'fa-regular' }} fa-thumbs-up" id="like-icon-{{ $review->id }}"></i>
+                                                        </a>
+                                                        <span id="like-count-{{ $review->id }}">{{ count($review->likes) }}</span>
+                                                        <span class="total-like-user-main ml-2" dir="rtl">
+                                                            @foreach($review->likes->take(3) as $like)
+                                                                <a data-toggle="tooltip" data-placement="top" title="{{ $like->user->name }}" href="#"><img alt="User" src="{{ $like->user->img? asset('storage/' . $like->user->img) : 'http://bootdey.com/img/Content/avatar/avatar2.png' }}" class="total-like-user rounded-pill"></a>
+                                                            @endforeach
+                                                        </span>
+                                                    </div>
+                                                    @if(auth()->user() && (auth()->user()->type == 1 || $review->user->id == auth()->user()->id))
+                                                        <div>
+                                                            @if($review->status == 0 && auth()->id() == $review->user_id && auth()->user()->type != 1)
+                                                                <span class="text-hidden">[Not visible]</span>
+                                                            @endif
+                                                            @if(auth()->user()->type == 1)
+    {{--                                                            <span onclick="checkVisibility()" class="text-black ml-3 cursor-pointer" style="font-size: 20px"><i class="fa fa-eye-slash"></i></span>--}}
+                                                                <form id="hide-review-{{ $review->id }}" action="{{ route('review.update', $review->id) }}" method="POST" style="display: none;">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <input type="hidden" name="status" value="{{ $review->status == 0 ? 1 : 0 }}">
+                                                                    <input type="hidden" name="preUrl" value="{{ url()->current().'#review-area' }}">
+                                                                </form>
+                                                                <span onclick="event.preventDefault();
+                                                                        if (confirm('Do you really want to hide this review?')) {
+                                                                        document.getElementById('hide-review-{{ $review->id }}').submit();
+                                                                        }"
+                                                                      class="text-black ml-3 cursor-pointer" style="font-size: 20px">
+                                                                    <i class="fa fa-eye{{ $review->status == 1 ? '-slash' : ''}}"></i>
+                                                                </span>
+                                                            @endif
+                                                            @if($review->user->id == auth()->user()->id)
+                                                                <span class="text-black ml-3 cursor-pointer edit-comment" onclick="window.location.href = '#leave-review-area';" style="font-size: 20px"><i class="fa fa-edit"></i></span>
+                                                            @endif
+                                                            <form id="delete-review-{{ $review->id }}" action="{{ route('review.destroy', $review) }}" method="POST" style="display: none;">
                                                                 @csrf
-                                                                @method('PUT')
-                                                                <input type="hidden" name="status" value="{{ $review->status == 0 ? 1 : 0 }}">
+                                                                @method('DELETE')
                                                                 <input type="hidden" name="preUrl" value="{{ url()->current().'#review-area' }}">
                                                             </form>
-                                                            <span onclick="event.preventDefault();
-                                                                    if (confirm('Do you really want to hide this review?')) {
-                                                                    document.getElementById('hide-review-{{ $review->id }}').submit();
-                                                                    }"
-                                                                  class="text-black ml-3 cursor-pointer" style="font-size: 20px">
-                                                                <i class="fa fa-eye{{ $review->status == 1 ? '-slash' : ''}}"></i>
-                                                            </span>
-                                                        @endif
-                                                        @if($review->user->id == auth()->user()->id)
-                                                            <span class="text-black ml-3 cursor-pointer edit-comment" onclick="window.location.href = '#leave-review-area';" style="font-size: 20px"><i class="fa fa-edit"></i></span>
-                                                        @endif
-                                                        <form id="delete-review-{{ $review->id }}" action="{{ route('review.destroy', $review) }}" method="POST" style="display: none;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <input type="hidden" name="preUrl" value="{{ url()->current().'#review-area' }}">
-                                                        </form>
 
-                                                        <a href="#"
-                                                           onclick="event.preventDefault();
-                                                                   if (confirm('Do you really want to delete this review?')) {
-                                                                   document.getElementById('delete-review-{{ $review->id }}').submit();
-                                                                   }"
-                                                           class="text-black ml-3 cursor-pointer" style="font-size: 20px">
-                                                            <i class="fa fa-trash-o"></i>
-                                                        </a>
-                                                    </div>
-                                                @endif
+                                                            <a href="#"
+                                                               onclick="event.preventDefault();
+                                                                       if (confirm('Do you really want to delete this review?')) {
+                                                                       document.getElementById('delete-review-{{ $review->id }}').submit();
+                                                                       }"
+                                                               class="text-black ml-3 cursor-pointer" style="font-size: 20px">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
                             @endif
 
                             @if($reviewCount > env('REVIEW_LIM'))

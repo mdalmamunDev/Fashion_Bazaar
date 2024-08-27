@@ -46,7 +46,7 @@
 
                                 <div class="col-md-6">
                                     <label for="brand">Offer</label>
-                                    <input type="number" step="0.01" id="dis-rate" name="dis_rate" class="form-control" value="{{ isset($product) ? $product->dis_rate : "" }}" placeholder="Set discount rate" aria-label="Offer" aria-describedby="dis_rate-addon" required>
+                                    <input type="number" step="0.01" id="dis-rate" name="dis_rate" class="form-control" value="{{ isset($product) ? $product->dis_rate : "" }}" placeholder="Set discount rate" aria-label="Offer" aria-describedby="dis_rate-addon">
                                 </div>
                             </div>
 

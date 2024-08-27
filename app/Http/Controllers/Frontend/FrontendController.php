@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {
@@ -23,13 +24,18 @@ class FrontendController extends Controller
             ->orderBy('dis_rate', 'desc')
             ->take(5)
             ->get();
-        $data['resentProducts'] = Product::select('id', 'name', 'details', 'img', 'created_at')
+        $data['resentProducts'] = Product::select('id', 'name', 'brand', 'img', 'created_at')
             ->where('status', '!=', 0)
             ->orderBy('created_at', 'desc')
             ->take(3)
             ->get();
 
-        $data['categories'] = Category::where('status', '!=', 0)->get();
+        $data['categories'] = Category::select('categories.*')
+            ->leftJoin('products', 'categories.id', '=', 'products.category_id')
+            ->where('categories.status', '!=', 0)
+            ->groupBy('categories.id', 'categories.category_name', 'categories.details', 'categories.status')
+            ->orderBy(DB::raw('COUNT(products.id)'), 'desc')
+            ->get();
 
         $data['testimonials'] = Testimonial::withCount('likes')
             ->orderBy('likes_count', 'desc')
@@ -66,12 +72,11 @@ class FrontendController extends Controller
     }
 
     public function profile($id) {
-        if (auth()->id() != $id) return redirect()->to('/');
-
         $data['user'] = User::findOrFail($id);
         $data['activities'] = Testimonial::where('user_id', $id)
             ->orderBy('created_at', 'desc')
             ->get();
+        $data['isAuthUser'] = auth()->id() == $id;
 
         return view('frontend.profile', $data);
     }

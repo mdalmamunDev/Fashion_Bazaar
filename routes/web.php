@@ -30,7 +30,7 @@ Route::prefix('/')->group(function () {
     Route::get('/blog', [FrontendController::class, 'blog']);
     Route::get('/contact', [FrontendController::class, 'contact']);
     Route::post('/join_us', [FrontendController::class, 'joinUs']);
-    Route::middleware(['auth.check'])->get('/profile/{id}', [FrontendController::class, 'profile'])->name('profile');
+    Route::get('/profile/{id}', [FrontendController::class, 'profile'])->name('profile');
 });
 
 

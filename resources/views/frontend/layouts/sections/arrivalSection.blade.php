@@ -16,12 +16,13 @@
                     <div>
                         @foreach($resentProducts as $pro)
                             <div class="d-flex">
-                                <div class="d-flex align-items-center" style="margin-right: 10px">
+                                <div class="d-flex align-items-center justify-content-center box-md" style="margin-right: 10px">
                                     <img src="{{asset('storage/'.$pro->img)}}" width="60px"/>
                                 </div>
                                 <div>
                                     <a href="{{ route('pro.show', $pro->id) }}" class="border-0 text-dark m-0 p-0 font-weight-bold pe-auto" style="background: none; font-size: 20px; cursor: pointer">{{ $pro->name }}</a>
-                                    <div class="mb-1" style="font-size: 14px">{!! truncateHtml($pro->details, 100) !!}</div>
+{{--                                    <div class="mb-1" style="font-size: 14px">{!! truncateHtml($pro->details, 30) !!}</div>--}}
+                                    <div class="mb-1" style="font-size: 14px">{{ $pro->brand }}</div>
                                     <p class="font-weight-light" style="font-size: 12px">{{ $pro->relative_time }}</p>
                                 </div>
                             </div>

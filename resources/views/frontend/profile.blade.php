@@ -60,21 +60,25 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-tab-pane" type="button" role="tab" aria-controls="overview-tab-pane" aria-selected="true">Overview</button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="activities-tab" data-bs-toggle="tab" data-bs-target="#activities-tab-pane" type="button" role="tab" aria-controls="activities-tab-pane" aria-selected="false">Activities</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications-tab-pane" type="button" role="tab" aria-controls="notifications-tab-pane" aria-selected="false">Notification</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">Edit</button>
-                                </li>
+                                @if($isAuthUser)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="activities-tab" data-bs-toggle="tab" data-bs-target="#activities-tab-pane" type="button" role="tab" aria-controls="activities-tab-pane" aria-selected="false">Activities</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications-tab-pane" type="button" role="tab" aria-controls="notifications-tab-pane" aria-selected="false">Notification</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane" type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">Edit</button>
+                                    </li>
+                                @endif
                             </ul>
                             <div class="tab-content pt-4" id="profileTabContent">
                                 @include('frontend.layouts.profile.profileOverview')
-                                @include('frontend.layouts.profile.profileActivities')
-                                @include('frontend.layouts.profile.profileNotifications')
-                                @include('frontend.layouts.profile.profileEdit')
+                                @if($isAuthUser)
+                                    @include('frontend.layouts.profile.profileActivities')
+                                    @include('frontend.layouts.profile.profileNotifications')
+                                    @include('frontend.layouts.profile.profileEdit')
+                                @endif
                             </div>
                         </div>
                     </div>

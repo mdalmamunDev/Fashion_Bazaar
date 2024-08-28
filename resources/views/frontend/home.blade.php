@@ -9,3 +9,7 @@
     @include('frontend.layouts.sections.subscribeSection')
     @include('frontend.layouts.sections.clientSection')
 @endsection
+
+@section('styles')
+    <link href="{{asset('frontend/css/cat-card.css')}}" rel="stylesheet" />
+@endsection

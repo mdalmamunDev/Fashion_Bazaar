@@ -53,16 +53,6 @@
 }
 
 
-
-.cat-box {
-    cursor: pointer;
-    text-transform: capitalize;
-}
-.cat-box:hover {
-    transform: scale(1.05, 1.1);
-    transition: 0.5s;
-}
-
 .user-ico-con:hover svg path {
     fill: #ff0000; /* Change to your desired color */
 }

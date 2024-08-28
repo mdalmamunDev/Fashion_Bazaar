@@ -16,5 +16,5 @@
 
 @section('script')
     <script src="{{ asset('backend/assets/js/vue/testimonialVue.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/vue/categoryTableVue.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/vue/categoryListVue.js') }}"></script>
 @endsection

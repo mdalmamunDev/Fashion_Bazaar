@@ -48,9 +48,6 @@
     </div>
 
     @if($isAuthUser)
-        <form action="{{ route('logout') }}" method="post">
-            {{ csrf_field() }}
-            <button type="submit" class="btn btn-danger mt-4">Logout</button>
-        </form>
+        <a href="{{ route('logout') }}" class="btn btn-danger mt-4">Logout</a>
     @endif
 </div>

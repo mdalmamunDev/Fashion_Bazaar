@@ -255,34 +255,20 @@
                                                     </a>
                                                 </div>
                                                 <div class="card-body px-1 pb-0">
-                                                    <p class="text-gradient text-dark mb-2 text-sm">
-                                                        {{ $pro->category->category_name }}
-                                                    </p>
-                                                    <a href="javascript:;">
-                                                        <h5>
+                                                    <div>
+                                                        <h5 class="text-center">
                                                             {{ $pro->name }}
                                                         </h5>
-                                                    </a>
-                                                    <div class="mb-4 text-sm">
-                                                        {!! truncateHtml($pro->details, 150) !!}
-{{--                                                        {{ $pro->details }}--}}
                                                     </div>
-                                                    <div class="d-flex align-items-center justify-content-between">
+                                                    <div class="text-gradient text-dark text-sm text-center">
+                                                        <i class="fa fa-hashtag"></i> {{ $pro->category->category_name }}
+                                                    </div>
+                                                    <div class="text-gradient text-dark mb-4 text-sm text-center">
+{{--                                                        {!! truncateHtml($pro->details, 150) !!}--}}
+                                                        <i class="fa fa-building"></i> {{ $pro->brand }}
+                                                    </div>
+                                                    <div class="d-flex align-items-center justify-content-center">
                                                         <a href="{{ route('pro.show', $pro->id) }}" target="_blank" class="btn btn-outline-primary btn-sm mb-0">View Product</a>
-                                                        <div class="avatar-group mt-2">
-                                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Elena Morison" data-bs-original-title="Elena Morison">
-                                                                <img alt="Image placeholder" src="{{asset('backend/assets/img/team-1.jpg')}}">
-                                                            </a>
-                                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Ryan Milly" data-bs-original-title="Ryan Milly">
-                                                                <img alt="Image placeholder" src="{{asset('backend/assets/img/team-2.jpg')}}">
-                                                            </a>
-                                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Nick Daniel" data-bs-original-title="Nick Daniel">
-                                                                <img alt="Image placeholder" src="{{asset('backend/assets/img/team-3.jpg')}}">
-                                                            </a>
-                                                            <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Peterson" data-bs-original-title="Peterson">
-                                                                <img alt="Image placeholder" src="{{asset('backend/assets/img/team-4.jpg')}}">
-                                                            </a>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

@@ -13,7 +13,7 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody id="categoryTableArea">
+            <tbody>
                 <tr v-for="(category, key) in categories" :key="category.id">
                     <td>
                         <div class="ms-3">
@@ -31,7 +31,7 @@
                     </td>
                     <td class="align-middle text-center">
                         @if(auth()->user()->type == 1)
-                            <a :href="`{{ route('cat.edit', '') }}/${category.id}`" class="btn btn-warning p-2 mb-0">Update</a>
+                            <a @click="onClickUpdate(category)" class="btn btn-warning p-2 mb-0">Update</a>
                             <a @click="deleteCat(category.id)" class="btn btn-danger p-2 mb-0">Delete</a>
                         @else
                             <a href="{{ route('toast.wa') }}" class="btn btn-secondary p-2 mb-0">Update</a>

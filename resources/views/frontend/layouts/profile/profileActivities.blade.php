@@ -1,12 +1,14 @@
 <div class="tab-pane fade" id="activities-tab-pane" role="tabpanel" aria-labelledby="activities-tab" tabindex="0">
     @foreach($activities as $activity)
+        {{ $activity }}
         <div class="p-3 d-flex align-items-center bg-light border-bottom osahan-post-header">
         <div class="dropdown-list-image rounded-circle mr-3 box-sm box-bg-red overflow-hidden">
             <img class="img-cover" src="{{ asset('frontend/images/logo.png') }}" alt="">
         </div>
         <div class="font-weight-bold mr-3">
             <div class="text-truncate">You sent a testimonial</div>
-            <div class="small">{{ strlen($activity->content)>110 ? substr($activity->content, 0, 110).'...' : $activity->content }}</div>
+{{--            <div class="small">{{ strlen($activity->content)>110 ? substr($activity->content, 0, 110).'...' : $activity->content }}</div>--}}
+            <div class="small">{{ $activity->obj->content }}</div>
         </div>
         <span class="ml-auto mb-auto">
             <div class="btn-group d-block">

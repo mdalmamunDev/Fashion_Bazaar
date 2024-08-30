@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Testimonial;
 use App\Models\TestimonialLike;
+use App\Models\UserActivity;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,16 +33,6 @@ class TestimonialController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -49,52 +40,34 @@ class TestimonialController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'content' => 'required|max:500',
-        ]);
+        try{
+            $request->validate([
+                'content' => 'required|max:500',
+            ]);
 
 
-        Testimonial::create([
-            'user_id' => auth()->id(),
-            'content' => $request->input('content'),
-        ]);
+            $test = Testimonial::create([
+                'user_id' => auth()->id(),
+                'content' => $request->input('content'),
+            ]);
 
-        Toastr::success('Your message send successfully.', 'Message send!', ["positionClass" => "toast-top-center"]);
-        return redirect()->back();
-    }
+            // create a user activity
+            UserActivity::create([
+                'user_id' => auth()->id(),
+                'obj_id' => $test->id,
+                'obj_type' => Testimonial::class,
+                'type' => 20
+            ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Testimonial  $testimonial
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Testimonial $testimonial)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Testimonial  $testimonial
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Testimonial $testimonial)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Testimonial  $testimonial
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Testimonial $testimonial)
-    {
-        //
+            Toastr::success('Your message send successfully.', 'Message send!', ["positionClass" => "toast-top-center"]);
+            return redirect()->back();
+        } catch (\Exception $exception){
+            return response()->json([
+                'data' => $exception->getMessage(),
+                'status' => 5000,
+                'message' => 'Something Wrong'
+            ]);
+        }
     }
 
     /**

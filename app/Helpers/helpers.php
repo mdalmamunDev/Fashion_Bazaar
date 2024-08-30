@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Carbon;
+
 if (!function_exists('truncateHtml')) {
     function truncateHtml($text, $maxLength)
     {
@@ -42,6 +44,52 @@ if (!function_exists('truncateHtml')) {
         }
 
         return $truncated;
+    }
+}
+
+
+if (!function_exists('relativeTime')) {
+    function relativeTime($time) {
+        // Convert the input time to a Carbon instance if it's not already one
+        if (!$time instanceof Carbon) {
+            $time = Carbon::parse($time);
+        }
+
+        // Return the relative time in a human-readable format
+        return $time->diffForHumans([
+            'parts' => 1, // Limit to only one unit (e.g., '1m', '2h')
+            'short' => true, // Use short versions (e.g., 'm' for minutes, 'h' for hours)
+            'syntax' => Carbon::DIFF_ABSOLUTE, // Avoid "ago"
+        ]);
+    }
+}
+
+
+
+if (!function_exists('prepareUserActivity')) {
+    /**
+     * @param $activity
+     * @return stdClass
+     */
+    function prepareUserActivity($activity)
+    {
+        if (!$activity) return null;
+
+        $preAct = new stdClass();
+
+        switch ($activity->type) {
+            case 1:
+                break;
+            case 20:
+                // testimonial
+                $preAct->title = 'You sent a testimonial';
+                $preAct->body = $activity->obj->content;
+                break;
+            default:
+                // def logic
+        }
+
+        return $preAct;
     }
 }
 

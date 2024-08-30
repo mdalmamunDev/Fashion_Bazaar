@@ -14,7 +14,7 @@
         </div>
     </section>
     <!-- end inner page section -->
-    <!-- why section -->
+    <!-- testimonial section -->
     <section class="why_section layout_padding">
         <div class="container">
 
@@ -40,7 +40,7 @@
             </div>
         </div>
     </section>
-    <!-- end why section -->
+    <!-- end testimonial section -->
 
     @include('frontend.layouts.sections.arrivalSection')
 @endsection

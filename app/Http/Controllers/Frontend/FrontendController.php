@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Testimonial;
 use App\Models\User;
+use App\Models\UserActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -73,7 +74,7 @@ class FrontendController extends Controller
 
     public function profile($id) {
         $data['user'] = User::findOrFail($id);
-        $data['activities'] = Testimonial::where('user_id', $id)
+        $data['activities'] = UserActivity::where('user_id', $id)
             ->orderBy('created_at', 'desc')
             ->get();
         $data['isAuthUser'] = auth()->id() == $id;

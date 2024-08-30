@@ -31,6 +31,13 @@ There are three types of users in the system:
     - Can change his profile information only.
     - Can mange his own reviews.
 
+## User Activity Types
+
+There are many types of users activity in the system:
+
+- 1 => Review a product
+- 20 => Testimonial or app review
+
 ## Installation
 
 ### Prerequisites
